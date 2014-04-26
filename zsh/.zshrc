@@ -101,6 +101,18 @@ alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
 alias envg="env | sort | grep"
 alias envgi="env | sort | grep -i"
 
+# ls variants
+alias ll='ls -lh'
+alias lla='ll -a'
+alias lls='ll -s'
+alias llsa='lls -A'
+alias llsr='lls -r'
+alias llsra='llsr -A'
+alias llt='ll -t'
+alias llta='llt -A'
+alias lltr='llt -r'
+alias lltra='lltr -A'
+
 function psg() { ps -ef | grep "$@" | grep -v grep | more; }
 function psgi() { ps -ef | grep -i "$@" | grep -v grep | more; }
 
@@ -158,6 +170,6 @@ remind() {
 }
 
 # source z.sh (https://github.com/rupa/z)
-. ~/$REPODIR/z/z.sh
+. $REPODIR/z/z.sh
 
 ## sublimeconf: filetype=shell
