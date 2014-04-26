@@ -1,0 +1,13 @@
+[color]
+ui = true
+
+[core]
+pager = less -r
+editor = vim
+
+[user]
+email = sapientdust+github@gmail.com
+name = eukaryote
+
+[push]
+default = simple
