@@ -59,6 +59,7 @@ function psgi() { ps -ef | grep -i "$@" | grep -v grep | more; }
 function psg() { ps -ef | grep "$@" | grep -v grep | more; }
 
 alias redol="!! | less"
+unalias rm
 
 # Print the IP address of the first interface that has a non-localhost IP
 # adress, returning 0 if successful and 1 if not.
