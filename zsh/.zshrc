@@ -28,7 +28,7 @@ setopt extended_glob # treat #, ~, ^ as part of pattern for filename generation
 
 # ===== History
 setopt append_history # multiple terminal sessions all append to same history
-setopt extended_history # save timestamp of command and duration
+unsetopt extended_history # save timestamp of command and duration
 setopt inc_append_history # add comamnds as they are typed, not at shell exit
 setopt hist_expire_dups_first # trim oldest dupes first
 unsetopt hist_ignore_dups # do write dupe events to history
@@ -96,9 +96,10 @@ alias gu="git shortlog | grep -E '^[^ ]'"
 
 
 # show environment in sorted order with color-highlight of KEY
-alias env="\env | sort | grep -E '^[A-Z_0-9]+'"
-alias envg="\env | sort | grep"
-alias envgi="\env | sort | grep -i"
+# (don't use 'env' as alias, because it interferes with z.sh)
+alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
+alias envg="env | sort | grep"
+alias envgi="env | sort | grep -i"
 
 function psg() { ps -ef | grep "$@" | grep -v grep | more; }
 function psgi() { ps -ef | grep -i "$@" | grep -v grep | more; }
@@ -155,5 +156,8 @@ remind() {
     } &) > /dev/null
     echo "$(date):  Reminder set for ${seconds} seconds"
 }
+
+# source z.sh (https://github.com/rupa/z)
+. ~/$REPODIR/z/z.sh
 
 ## sublimeconf: filetype=shell
