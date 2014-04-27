@@ -24,6 +24,11 @@ zstyle ':prezto:*:*' color 'yes'
 
 # Set the Prezto modules to load (browse modules).
 # The order matters.
+# To take advantage of the pyenv support of the 'python' module,
+# ensure the pyenv git repo is checked out and there is a symlink
+# to it at ~/.pyenv; additionally, get pyenv-virtualenv as described
+# on https://github.com/yyuu/pyenv-virtualenv to enable the virtualenv
+# plugin of pyenv.
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
