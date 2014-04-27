@@ -42,7 +42,8 @@ setopt share_history # imports new commands & appends typed commands to history
 setopt always_to_end # move cursor to end of word when completing from middle
 unsetopt auto_menu # don't show completion menu
 unsetopt auto_name_dirs # disable auto var generation of dirs
-setopt complete_in_word # Allow completion from within a word/phrase
+setopt complete_in_word # allow completion from within a word/phrase
+unsetopt complete_aliases # alias expansion before completion finishes is okay
 
 unsetopt menu_complete # do not autoselect the first completion entry
 
@@ -54,10 +55,13 @@ unsetopt correctall # no spelling correction for arguments
 setopt prompt_subst # enable all prompt expansion and substitution
 unsetopt transient_rprompt # don't restrict rprompt to the current prompt
 
+# ===== IO
+setopt multios # implicit tees or cats when multiple redirections attempted
+setopt clobber # allow redirecting to existing files without requiring >>
 
 # show human-readable listing of sub-directory sizes in descending order
 # of size, using $1 as the directory or defaulting to '.' if none given
-function ddu () {
+ddu () {
     cd ${1:-.} && du -hs * | sort -h
 }
 
@@ -94,6 +98,15 @@ alias gsh="git shortlog | grep -E '^[ ]+\w+' | wc -l"
 # gu shows a list of all developers and the number of commits they've made
 alias gu="git shortlog | grep -E '^[^ ]'"
 
+# history utilities
+h() {
+    if [[ -n "$1" ]]
+    then
+        history | grep -E "$1"
+    else
+        history
+    fi
+}
 
 # show environment in sorted order with color-highlight of KEY
 # (don't use 'env' as alias, because it interferes with z.sh)
@@ -113,36 +126,27 @@ alias llta='llt -A'
 alias lltr='llt -r'
 alias lltra='lltr -A'
 
-function psg() { ps -ef | grep "$@" | grep -v grep | more; }
-function psgi() { ps -ef | grep -i "$@" | grep -v grep | more; }
+psg() { ps -ef | grep "$@" | grep -v grep | more; }
+psgi() { ps -ef | grep -i "$@" | grep -v grep | more; }
 
 # redo last command but pipe it to less
 alias redol="!! | less"
 
 # undo the annoying aliasing of rm as 'rm -i' that prezto sets up
-unalias rm
+alias rm="nocorrect rm"
 
-# print the IP address of the first interface that has a non-localhost IP
-# adress, returning 0 if successful and 1 if not.
-function thisip() {
-  ip_pat="addr:([0-9]+\.){3}[0-9]+"
-  for ip in $(/sbin/ifconfig -a | egrep -E -o $ip_pat | cut -d: -f2); do
-    if [ "127." != $(expr substr $ip 1 4) ]; then
-      echo $ip;
-      return 0;
+# a 'workon' helper function that behaves like virtualenvwrapper's 'workon';
+# completion is implemented in functions/_workon
+workon() {
+    # if no args, then list virtualenvs that pyenv knows about and return
+    if [[ $# = 0 ]]
+    then
+        pyenv virtualenvs
+        return 0
     fi
-  done
-  return 1;
-}
-
-function hostinfo() {
-  ip=$(this_ip)
-  echo -e "\nLogged in to ${RED}$HOSTNAME${NCOL} (${ip:-\"Not connected\"})"
-  echo -e "\n${RED}Additional information:${NCOL} " ; uname -a
-  echo -e "\n${RED}Users logged on:${NCOL} " ; w -h
-  echo -e "\n${RED}Current date:${NCOL} " ; date
-  echo -e "\n${RED}Machine stats:${NCOL} " ; uptime
-  echo -e "\n${RED}Memory stats:${NCOL} " ; free
+    # otherwise deactivate previous and activate the requested env
+    pyenv deactivate
+    pyenv activate "$1"
 }
 
 # if zenity is intalled, then popup a reminder after $1 seconds;
@@ -169,7 +173,12 @@ remind() {
     echo "$(date):  Reminder set for ${seconds} seconds"
 }
 
-# source z.sh (https://github.com/rupa/z)
-. $REPODIR/z/z.sh
+# initialize z.sh (https://github.com/rupa/z)
+source $REPODIR/z/z.sh
+
+# initialize virtualenvwrapper, which is on PATH somewhere
+# source $(which virtualenvwrapper.sh)
+eval "$(pyenv init -)"
+
 
 ## sublimeconf: filetype=shell
