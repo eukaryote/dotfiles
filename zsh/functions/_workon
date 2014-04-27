@@ -1,0 +1,14 @@
+#compdef workon
+
+
+## autocomplete for my 'workon' helper function
+_workon() {
+    # get completions from pyenv, and convert per-line to space-delimited
+    completions=$(pyenv completions virtualenv | awk '{print $1}' | tr '\n' ' ')
+    _arguments "1:Environments:(${completions})"
+}
+
+
+_workon "$@"
+
+## sublimeconf: filetype=shell
