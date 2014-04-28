@@ -1,0 +1,20 @@
+#!/bin/zsh
+# This hook is run after a new virtualenv is activated.
+
+# Can't live without ipython, so install it posthaste
+${VIRTUAL_ENV}/bin/pip install ipython
+
+# If there appears to be a project dir in PROJECT_HOME,
+# and that project dir contains a 'requirements.txt' file,
+# then pip install the requirements in the virtualenv
+project_setup() {
+    local project="${PROJECT_HOME}/$(basename ${VIRTUAL_ENV})"
+    local requirements="${project}/requirements.txt"
+
+    if [[ -n "${PROJECT_HOME}" && -f "${requirements}" ]]
+    then
+        (cd "${project}" && ${VIRTUAL_ENV}/bin/pip install -r ${requirements})
+    fi
+}
+
+[[ -d "${PROJECT_HOME}" ]] && project_setup
