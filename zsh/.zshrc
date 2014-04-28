@@ -135,19 +135,6 @@ alias redol="!! | less"
 # undo the annoying aliasing of rm as 'rm -i' that prezto sets up
 alias rm="nocorrect rm"
 
-# a 'workon' helper function that behaves like virtualenvwrapper's 'workon';
-# completion is implemented in functions/_workon
-workon() {
-    # if no args, then list virtualenvs that pyenv knows about and return
-    if [[ $# = 0 ]]
-    then
-        pyenv virtualenvs
-        return 0
-    fi
-    # otherwise deactivate previous and activate the requested env
-    pyenv deactivate
-    pyenv activate "$1"
-}
 
 # if zenity is intalled, then popup a reminder after $1 seconds;
 # e.g., `remind 160 tea is ready`
@@ -180,5 +167,7 @@ source $REPODIR/z/z.sh
 # source $(which virtualenvwrapper.sh)
 eval "$(pyenv init -)"
 
+# initalize virtualenvwrapper via the pyenv-virtualenvwrapper plugin
+pyenv virtualenvwrapper_lazy
 
 ## sublimeconf: filetype=shell

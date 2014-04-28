@@ -36,20 +36,23 @@ export HISTFILE=~/.zsh_history
 # are intended to be sourced. Thus, I switched to using the
 # pyenv-virtualenv plugin instead of virtualenvwrapper.
 #
-# pyenv should use pyvenv rather than virtualenv
-export USE_PYVENV="1"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="${PYENV_ROOT}/bin:${PATH}"
 export WORKON_HOME="/v"
+export PYENV_VIRTUALENV_BASE="${WORKON_HOME}"
+export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_SKIPPIPCHECK="true"
+export PATH="${PYENV_ROOT}/bin:${PATH}"
 # pip should use same dir for venvs as virtualenvwrapper
 # TODO: probably not needed with pyenv
 export PIP_VIRTUALENV_BASE="${WORKON_HOME}"
 # make pip detect an active virtualenv and install to it,
 # without having to pass it the -E parameter.
 # TODO: probably not needed with pyenv
-export PIP_RESPECT_VIRTUALENV=true
+export PIP_RESPECT_VIRTUALENV="true"
+export VIRTUALENVWRAPPER_VIRTUALENV="pyvenv"
+export PREZTO_PYTHON_NO_VIRTUALENVWRAPPER="true"
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
 # add directory for custom functions/completions to fpath
-fpath=("${ZDOTDIR}/functions" $fpath)
+[[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
 
 ## sublimeconf: filetype=shell
