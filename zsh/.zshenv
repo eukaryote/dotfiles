@@ -37,6 +37,7 @@ export HISTFILE=~/.zsh_history
 # pyenv-virtualenv plugin instead of virtualenvwrapper.
 #
 export WORKON_HOME="/v"
+export PROJECT_HOME="$HOME/repos"
 export PYENV_VIRTUALENV_BASE="${WORKON_HOME}"
 export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_SKIPPIPCHECK="true"
