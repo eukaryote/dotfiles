@@ -1,13 +1,14 @@
 #!/bin/zsh
 # This hook is run after every virtualenv is activated.
 
-rehash
+# The rehash may be needed if paths seem to be stale at times
+#rehash
 
 # If PROJECT_HOME is set and there is a directory with the same name
 # as the currently activated virtualenv, then add that directory to
 # the PYTHONPATH, and if it contains a 'bin' directory, add that
 # bin directory to the PATH.
-_update_env() {
+() {
     local project="${PROJECT_HOME}/$(basename ${VIRTUAL_ENV})"
 
     if [[ -d "${project}" ]]
@@ -19,5 +20,3 @@ _update_env() {
 	    export PATH="${project}/bin:${PATH}"
     fi
 }
-
-_update_env

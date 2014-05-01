@@ -1,20 +1,33 @@
 #!/bin/zsh
 # This hook is run after a new virtualenv is activated.
 
+
 # Can't live without ipython, so install it posthaste
 ${VIRTUAL_ENV}/bin/pip install ipython
 
 # If there appears to be a project dir in PROJECT_HOME,
 # and that project dir contains a 'requirements.txt' file,
-# then pip install the requirements in the virtualenv
-project_setup() {
-    local project="${PROJECT_HOME}/$(basename ${VIRTUAL_ENV})"
+# then pip install the requirements into the new virtualenv;
+# also, create the autoenv '.venv' file in project if absent,
+# which will result in the virtualenv being automatically
+# activated after I cd into the base directory of the project.
+() {
+    [[ ! -d "${PROJECT_HOME}" ]] && return 0
+
+    local name="$(basename ${VIRTUAL_ENV})"
+    local project="${PROJECT_HOME}/${name}"
     local requirements="${project}/requirements.txt"
 
-    if [[ -n "${PROJECT_HOME}" && -f "${requirements}" ]]
+    if [[ -f "${requirements}" ]]
     then
-        (cd "${project}" && ${VIRTUAL_ENV}/bin/pip install -r ${requirements})
+        cd "${project}" || exit 1
+        ${VIRTUAL_ENV}/bin/pip install -r ${requirements}
+    fi
+
+    if [[ ! -f "${project}/.venv" ]]
+    then
+        echo "${name}" > "${project}/.venv"
     fi
 }
 
-[[ -d "${PROJECT_HOME}" ]] && project_setup
+# sublimeconf: filetype=shell
