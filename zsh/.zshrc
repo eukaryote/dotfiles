@@ -172,4 +172,6 @@ eval "$(pyenv init -)"
 # initalize virtualenvwrapper via the pyenv-virtualenvwrapper plugin
 pyenv virtualenvwrapper_lazy
 
+source $ZDOTDIR/../virtualenvwrapper/chpwd.zsh
+
 ## sublimeconf: filetype=shell
