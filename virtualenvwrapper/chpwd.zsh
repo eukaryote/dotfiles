@@ -8,6 +8,7 @@
 # file, and if there is, then activate the virtualenv that is named inside
 # the file
 chpwd() {
+    emulate -L zsh
     if [[ ! -s .venv ]]
     then
         return 0
