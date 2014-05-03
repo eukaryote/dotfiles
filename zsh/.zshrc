@@ -59,7 +59,14 @@ unsetopt transient_rprompt # don't restrict rprompt to the current prompt
 
 # ===== IO
 setopt multios # implicit tees or cats when multiple redirections attempted
-setopt clobber # allow redirecting to existing files without requiring >>
+setopt clobber # allow redirecting to existing files without requiring '>>'
+
+# ===== Completion zstyles
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*' group-name
 
 # show human-readable listing of sub-directory sizes in descending order
 # of size, using $1 as the directory or defaulting to '.' if none given
