@@ -141,6 +141,10 @@ psgi() { ps -ef | grep -i "$@" | grep -v grep | more; }
 # redo last command but pipe it to less
 alias redol="!! | less"
 
+# zsh reload commands
+alias reload=". ${ZDOTDIR:-$HOME}/.zshrc"
+alias reload!="exec zsh"
+
 # undo the annoying aliasing of rm as 'rm -i' that prezto sets up
 alias rm="nocorrect rm"
 
