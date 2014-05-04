@@ -92,7 +92,7 @@ function prompt_eukaryote_setup {
   if [[ -n "${SSH_CONNECTION}" ]]; then
     userhostinfo="${_prompt_eukaryote_colors[3]}%n%f@${_prompt_eukaryote_colors[2]}%m%f "
   fi
-  PROMPT="${userhostinfo}${_prompt_eukaryote_colors[5]}%~%f "'${vcs_info_msg_0_}'"» "
+  PROMPT="${userhostinfo}${_prompt_eukaryote_colors[5]}%~%f"'${vcs_info_msg_0_}'" » "
   RPROMPT="${return_code}"
 }
 
