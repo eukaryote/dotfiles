@@ -87,8 +87,12 @@ function prompt_eukaryote_setup {
   # Set python-info parameters.
   zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
 
-  # Define prompts.
-  PROMPT="${_prompt_eukaryote_colors[3]}%n%f@${_prompt_eukaryote_colors[2]}%m%f ${_prompt_eukaryote_colors[5]}%~%f "'${vcs_info_msg_0_}'"» "
+  # Define prompts, only including user@host info in an SSH shell
+  local userhostinfo
+  if [[ -n "${SSH_CONNECTION}" ]]; then
+    userhostinfo="${_prompt_eukaryote_colors[3]}%n%f@${_prompt_eukaryote_colors[2]}%m%f "
+  fi
+  PROMPT="${userhostinfo}${_prompt_eukaryote_colors[5]}%~%f "'${vcs_info_msg_0_}'"» "
   RPROMPT="${return_code}"
 }
 
