@@ -135,6 +135,8 @@ alias llta='llt -A'
 alias lltr='llt -r'
 alias lltra='lltr -A'
 
+alias manh='man --html'
+
 psg() { ps -ef | grep "$@" | grep -v grep | more; }
 psgi() { ps -ef | grep -i "$@" | grep -v grep | more; }
 
