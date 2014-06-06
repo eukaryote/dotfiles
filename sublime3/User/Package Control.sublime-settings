@@ -1,7 +1,7 @@
 {
 	"installed_packages":
 	[
-		"Google Search",
+		"IJulia",
 		"Python Checker",
 		"Python Flake8 Lint",
 		"Search Stack Overflow",
