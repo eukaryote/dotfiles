@@ -1,15 +1,16 @@
 {
-	"installed_packages":
-	[
-		"IJulia",
-		"Python Checker",
-		"Python Flake8 Lint",
-		"Search Stack Overflow",
-		"Theme - Soda",
-		"Theme - Spacefunk",
-		"TodoReview",
-		"TrailingSpaces",
-		"Vintageous",
-		"Zen Tabs"
-	]
+    "installed_packages":
+    [
+        "GoSublime",
+        "IJulia",
+        "Python Checker",
+        "Python Flake8 Lint",
+        "Search Stack Overflow",
+        "Theme - Soda",
+        "Theme - Spacefunk",
+        "TodoReview",
+        "TrailingSpaces",
+        "Vintageous",
+        "Zen Tabs"
+    ]
 }
