@@ -68,6 +68,33 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name
 
+
+# compile a single-file c program
+ccompile() {
+    local dirpath="$(dirname $1)"
+    local filename="$(basename $1)"
+    local outname="$(basename ${filename} .c)"
+
+    # echo "dirpath: ${dirpath}"
+    # echo "filename: ${filename}"
+    # echo "outame: ${outname}"
+
+    if [[ "${outname}" == "${filename}" ]]; then
+        echo "usage: ccompile FILE.c"
+        return 1
+    fi
+    (cd "${dirpath}" && gcc -Wall -Wextra -O2 -g -pedantic -std=c11 -o "${outname}" "${filename}")
+}
+
+# compile a single-file c program and run the output executable, passing args after
+# the first to the executable
+crun() {
+    filepath="$1"
+    ccompile "${filepath}"
+    shift
+    (cd "$(dirname ${filepath})" && ./$(basename "${filepath}" .c) "$@")
+}
+
 # show human-readable listing of sub-directory sizes in descending order
 # of size, using $1 as the directory or defaulting to '.' if none given
 ddu () {
