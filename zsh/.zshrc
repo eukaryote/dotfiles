@@ -268,13 +268,25 @@ remind() {
 # initialize z.sh (https://github.com/rupa/z)
 source $REPODIR/z/z.sh
 
-# initialize virtualenvwrapper, which is on PATH somewhere
-# source $(which virtualenvwrapper.sh)
-#eval "$(pyenv init -)"
+# Set path to custom hook scripts for things postactivate events
+export VIRTUALENVWRAPPER_HOOK_DIR=${ZDOTDIR}/../virtualenvwrapper
 
-# initalize virtualenvwrapper via the pyenv-virtualenvwrapper plugin
-#pyenv virtualenvwrapper_lazy
+# Don't init the base pyenv here, because prezto already does it
+# in the 'python' module.
 
-#source $ZDOTDIR/../virtualenvwrapper/chpwd.zsh
+# Initalize virtualenvwrapper via the pyenv-virtualenvwrapper plugin;
+# I had problems getting this to work when pyenv was checked out into
+# ~/repos and symlinked to ~/.pyenv, so now pyenv is checked out to
+# ~/.pyenv and symlinked to ~/repos/pyenv.
+# In order for this to work, the pyenv-virtualenvwrapper plugin needs to
+# exist in ~/.pyenv/plugins.
+pyenv virtualenvwrapper_lazy
+
+# Initialize my chpwd script that will activate a virtualenv when entering
+# a directory that contains a .venv file with the name of a virtualenv inside
+# (or entering a descendent of such a directory) and deactivate the virtualenv
+# when changing to a directory not inside the virtualenv.
+source $ZDOTDIR/../virtualenvwrapper/chpwd.zsh
+
 
 ## sublimeconf: filetype=shell
