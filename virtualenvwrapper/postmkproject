@@ -1,18 +1,43 @@
 #!/bin/zsh
 # This hook is run after a new project is activated.
 
-
 # After making a project, automatically add the '.venv'
 # file to the project, which will result in the virtualenv
-# for that project being automatically activated when I
-# cd into that project directory.
+# for that project being automatically activated upon
+# cd into that project directory due to the chpwd function in chwpd.zsh
 () {
+    test -n "${VIRTUAL_ENV}" || {
+        echo "postmkproject: VIRTUAL_ENV not set"
+        return 1
+    }
+    test -n "${PROJECT_HOME}" || {
+        echo "postmkproject: PROJECT_HOME not set"
+        return 1
+    }
+    test -d "${PROJECT_HOME}" || {
+        echo "postmkproject: PROJECT_HOME not a directory: ${PROJECT_HOME}"
+        return 1
+    }
+
     local name="$(basename ${VIRTUAL_ENV})"
     local project_dir="${PROJECT_HOME}/${name}"
-    if [[ ! -f "${project_dir}/.venv" ]]
+    local requirements="${project}/requirements.txt"
+
+    if [[ -f "${requirements}" ]]
     then
-        echo "${name}" > "${project_dir}/.venv"
+        cd "${project}" || exit 1
+        ${VIRTUAL_ENV}/bin/pip install -r ${requirements}
     fi
+
+    test -d "${project_dir}" || {
+        echo "postmkvirtualenv: project_dir '${project_dir}' is not a directory"
+        return 1
+    }
+    if [[ ! -f "${project}/.venv" ]]
+    then
+        echo "${name}" > "${project}/.venv"
+    fi
+    cd "${project}"
 }
 
 # sublimeconf: filetype=shell

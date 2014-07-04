@@ -49,7 +49,7 @@ chpwd() {
         return 0
     fi
 
-    local venv="$(cat .venv)"
+    local venv="$(cat .venv 2> /dev/null)"
     if [[ -d "${WORKON_HOME}/${venv}" ]]
     then
         if [[ "${venv}" !=  "${VIRTUAL_ENV##*/}" ]]

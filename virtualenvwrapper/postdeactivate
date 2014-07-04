@@ -1,0 +1,18 @@
+#!/bin/zsh
+# This hook is run after every virtualenv is deactivated.
+
+() {
+    if [ -n "${PREACTIVATE_PYTHONPATH+set}" ]; then
+        PYTHONPATH="${PREACTIVATE_PYTHONPATH}"
+    else
+        unset PYTHONPATH
+    fi
+    if [ -n "${PREACTIVATE_PWD}" ]; then
+        cd "${PREACTIVATE_PWD}"
+    fi
+
+    rehash
+}
+
+
+# sublimefiletypeconf: shell
