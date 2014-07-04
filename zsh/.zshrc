@@ -150,6 +150,70 @@ alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
 alias envg="env | sort | grep"
 alias envgi="env | sort | grep -i"
 
+LESS_LONG="--LONG-PROMPT --ignore-case --hilite-unread --RAW-CONTROL-CHARS"
+LESS_SHORT="${LESS_LONG} --quit-if-one-screen --no-init"
+export LESS="${LESS_LONG}"  # replace what prezto set
+
+# page through a single file using less, quitting immediately while leaving
+# the `less` output on screen if the file contains no more than one page
+# of text, or allowing zsh to restore the original screen state on exit
+# if the file contains more than one full page of text.
+sless() {
+    local page="$(tput lines)"
+    local less="$(/bin/which less)"  # avoid aliases/functions
+
+    test "$#" -eq "1" || {
+        echo "usage: sless PATH"
+        return 1
+    }
+
+    if [ "$(head -n $((${page} + 1)) $1 | wc -l)" -le "${page}" ]; then
+        # If no more than a page of text, less should quit immediately after
+        # showing the output, and '--no-init' needs to be included
+        # to prevent zsh from clearing the output on exit and restoring
+        # the original screen state, which means the less output disappears.
+        LESS="${LESS_SHORT}" ${less} $1
+    else
+        # If more than a page of text, less should behave as normally under
+        # zsh, where we don't prevent init and don't quit if one screen.
+        # In this case, zsh will restore the original screen state and not
+        # show any of the paged output. Ideally, I'd like to still display
+        # only the last page of less output in this case, while still leaving
+        # the original terminal contents before invoking less no further than
+        # a page away in the terminal, but not investigating for now.
+        LESS="${LESS_LONG}" ${less} $1
+    fi
+}
+
+
+# Print a spinner at the current cursor location for as long as the process
+# with pid equal to the 1st param is running. If no params are passed,
+# use the pid of the last background process launched.
+spin() {
+    local pid="${1:-$!}"
+    local period="0.1"
+    local spin_chars='|/-\'
+    local saved_traps=$(trap)  # current traps, for restoring on completion
+    local position=1           # current position within spin_chars
+
+    cleanup() {
+        tput cnorm             # show cursor again
+        echo -n -e '\b'        # erase last printed spinner char
+        eval "${saved_traps}"  # restore original trap state
+    }
+    tput civis                 # hide cursor while spinning
+    trap "cleanup; return 1" INT EXIT  # ensure cleanup occurs
+
+    echo -n " "  # forward 1 char, to prepare for 1st backspace
+    while $(kill -0 $pid > /dev/null 2>&1); do
+        position=$(($((position+1)) % 4))
+        echo -n - "\b${spin_chars:$position:1}"
+        sleep $period
+    done
+    cleanup
+}
+
+
 # ls variants
 alias ll='ls -lh'
 alias lla='ll -a'
@@ -176,7 +240,6 @@ alias reload!="exec zsh"
 
 # undo the annoying aliasing of rm as 'rm -i' that prezto sets up
 alias rm="nocorrect rm"
-
 
 # if zenity is intalled, then popup a reminder after $1 seconds;
 # e.g., `remind 160 tea is ready`
@@ -207,11 +270,11 @@ source $REPODIR/z/z.sh
 
 # initialize virtualenvwrapper, which is on PATH somewhere
 # source $(which virtualenvwrapper.sh)
-eval "$(pyenv init -)"
+#eval "$(pyenv init -)"
 
 # initalize virtualenvwrapper via the pyenv-virtualenvwrapper plugin
-pyenv virtualenvwrapper_lazy
+#pyenv virtualenvwrapper_lazy
 
-source $ZDOTDIR/../virtualenvwrapper/chpwd.zsh
+#source $ZDOTDIR/../virtualenvwrapper/chpwd.zsh
 
 ## sublimeconf: filetype=shell

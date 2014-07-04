@@ -41,8 +41,8 @@ zstyle ':prezto:load' pmodule \
   'completion' \
   'prompt' \
   'git' \
-  'python' \
-  'syntax-highlighting'
+  'syntax-highlighting' \
+  'python'
 
 #
 # Editor
