@@ -6,6 +6,11 @@
 #   eukaryote <sapientdust+github@gmail.com>
 #
 
+# This relies on my a zstyle option I added to my prezto fork to
+# avoid doing the virtualenvwrapper initialization that the prezto
+# python module performs, which crashes zsh when used in conjunction
+# with pyenv. The solution is to use the pyenv-virtualenvwrapper plugin
+# for pyenv and ensure that prezto doesn't do the initialization.
 zstyle ':prezto:module:python' skip-virtualenvwrapper-init yes
 
 # Source Prezto.

@@ -3,7 +3,7 @@
 
 () {
     # auto-install ipython immediately, unless specifically request not to
-    if [ -z "${VIRTUALENV_NO_AUTO_IPYTHON}" ]; then
+    if [ -z "${VIRTUALENV_NO_IPYTHON}" ]; then
         ${VIRTUAL_ENV}/bin/pip install ipython
     fi
 }
