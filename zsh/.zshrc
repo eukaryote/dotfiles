@@ -271,10 +271,12 @@ remind() {
 }
 
 # initialize z.sh (https://github.com/rupa/z)
-source $REPODIR/z/z.sh
+# source $REPODIR/z/z.sh
+
+VIRTUALENVWRAPPER_CONF_DIR="$(readlink -m -n ${ZDOTDIR}/../virtualenvwrapper)"
 
 # Set path to custom hook scripts for things postactivate events
-export VIRTUALENVWRAPPER_HOOK_DIR=${ZDOTDIR}/../virtualenvwrapper
+export VIRTUALENVWRAPPER_HOOK_DIR="${VIRTUALENVWRAPPER_CONF_DIR}"
 
 # Don't init the base pyenv here, because prezto already does it
 # in the 'python' module.
@@ -291,7 +293,7 @@ pyenv virtualenvwrapper_lazy
 # a directory that contains a .venv file with the name of a virtualenv inside
 # (or entering a descendent of such a directory) and deactivate the virtualenv
 # when changing to a directory not inside the virtualenv.
-source $ZDOTDIR/../virtualenvwrapper/chpwd.zsh
+source "${VIRTUALENVWRAPPER_CONF_DIR}/chpwd.zsh"
 
 
 ## sublimeconf: filetype=shell

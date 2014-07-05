@@ -45,16 +45,14 @@ export PROJECT_HOME="$HOME/repos"
 export PYENV_VIRTUALENV_BASE="${WORKON_HOME}"
 export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_SKIPPIPCHECK="true"
-#export PATH="$PYENV_ROOT/bin:$PATH"
 # pip should use same dir for venvs as virtualenvwrapper
-# TODO: probably not needed with pyenv
+# not needed with pyenv
 #export PIP_VIRTUALENV_BASE="${WORKON_HOME}"
-# make pip detect an active virtualenv and install to it,
-# without having to pass it the -E parameter.
-# TODO: probably not needed with pyenv
+# make pip detect an active virtualenv and install to it without -E parameter
+# not needed with pyenv
 #export PIP_RESPECT_VIRTUALENV="true"
 export VIRTUALENVWRAPPER_VIRTUALENV="pyvenv"
-export PREZTO_PYTHON_NO_VIRTUALENVWRAPPER="true"
+# export PREZTO_PYTHON_NO_VIRTUALENVWRAPPER="true"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
 # add directory for custom functions/completions to fpath
