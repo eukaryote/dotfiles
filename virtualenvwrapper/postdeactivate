@@ -2,17 +2,12 @@
 # This hook is run after every virtualenv is deactivated.
 
 () {
+    # restore the PYTHONPATH to what it was before activation, taking care
+    # to distinguish between "" and not set
     if [ -n "${PREACTIVATE_PYTHONPATH+set}" ]; then
         PYTHONPATH="${PREACTIVATE_PYTHONPATH}"
     else
         unset PYTHONPATH
     fi
-    if [ -n "${PREACTIVATE_PWD}" ]; then
-        cd "${PREACTIVATE_PWD}"
-    fi
-
-    rehash
+    # rehash
 }
-
-
-# sublimefiletypeconf: shell

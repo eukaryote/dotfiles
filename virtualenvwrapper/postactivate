@@ -18,9 +18,8 @@
         PYTHONPATH="${project}:${PYTHONPATH}"
         export PYTHONPATH="${project%:}"
         [ -d "${project}/bin" ] && export PATH="${project}/bin:${PATH}"
-        cd "${project}"
     fi
 
     # The rehash may be needed if paths seem to be stale at times
-    rehash
+    # rehash
 }

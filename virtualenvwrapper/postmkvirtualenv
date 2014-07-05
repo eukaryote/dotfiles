@@ -2,10 +2,13 @@
 # This hook is run after activation of a just-created virtualenv.
 
 () {
-    # auto-install ipython immediately, unless specifically request not to
+    # auto-install ipython immediately unless requested not to (e.g., tmp envs)
     if [ -z "${VIRTUALENV_NO_IPYTHON}" ]; then
-        ${VIRTUAL_ENV}/bin/pip install ipython
+        "${VIRTUAL_ENV}/bin/pip" install ipython
+    fi
+    if [[ -n "${PROJECT_HOME}" && -n "${VIRTUAL_ENV}" ]]; then
+        if [[ ! -f "${VIRTUAL_ENV}/.project" ]]; then
+            echo "${PROJECT_HOME}/$(basename ${VIRTUAL_ENV})" > "${VIRTUAL_ENV}/.project"
+        fi
     fi
 }
-
-# sublimeconf: filetype=shell
