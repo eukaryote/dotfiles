@@ -1,3 +1,14 @@
 #!/bin/zsh
 # This hook is run before every virtualenv is activated.
 # argument: environment name
+
+
+() {
+    # record PATH before activation, so we can restore it when deactivating
+    export PREACTIVATE_PATH="${PATH}"
+
+    # record PYTHONPATH if it existed before activation (even if it had no value)
+    if [ -n "${PYTHONPATH+set}" ]; then
+        export PREACTIVATE_PYTHONPATH="${PYTHONPATH}"
+    fi
+}

@@ -1,13 +1,19 @@
 #!/bin/zsh
 # This hook is run after every virtualenv is deactivated.
 
+# restore env vars to their original state
 () {
     # restore the PYTHONPATH to what it was before activation, taking care
     # to distinguish between "" and not set
     if [ -n "${PREACTIVATE_PYTHONPATH+set}" ]; then
-        PYTHONPATH="${PREACTIVATE_PYTHONPATH}"
+        PYTHONPATH="${PREACTIVATE_PYTHONPATH}"  # no export
     else
         unset PYTHONPATH
     fi
+    if [ -n "${PREACTIVATE_PATH}" ]; then
+        PATH="${PREACTIVATE_PATH}"
+    fi
+    # unset the variable chpwd sets when auto-calling 'workon'
+    unset CHPWD_WORK
     # rehash
 }

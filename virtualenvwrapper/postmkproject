@@ -1,5 +1,5 @@
 #!/bin/zsh
-# This hook is run after a just-create project is activated.
+# This hook is run after a just-created project is activated.
 
 
 # After making a project, automatically add the '.venv'
@@ -7,14 +7,13 @@
 # for that project being automatically activated upon
 # cd into that project directory due to the chpwd function in chwpd.zsh
 () {
-    echo "postmkproject: ..."
     if [[ -z "${VIRTUAL_ENV}" || ! -d "${PROJECT_HOME}" ]]
         return 0;
     }
 
     local projdir="${PROJECT_HOME}/${name}"
 
-    if [[ -d "${projdir}" && ! -f "${projdir}/.venv" ]]; then
+    if [[ -d "${projdir}" && ! -s "${projdir}/.venv" ]]; then
         echo "$(basename ${VIRTUAL_ENV})" > "${projdir}/.venv"
     fi
 }

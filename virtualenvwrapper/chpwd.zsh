@@ -28,8 +28,8 @@ _chpwd_activating=""
 
 # Deactivate the current virtualenv if necessary
 chpwd_check_deactivation() {
-    # do nothing if not in a virtualenv or not in one that we know about
-    if [[ -z "${VIRTUAL_ENV}" || -z "${_chpwd_venv_dir}" ]]; then
+    # do nothing if not in a virtualenv or not in one that we activated
+    if [[ -z "${VIRTUAL_ENV}" || -z "${_chpwd_venv_dir}" || -z "${CHPWD_WORKON}" ]]; then
         return 0
     fi
     # do nothing if current directory is a descendant of the virtualenv dir
@@ -38,7 +38,6 @@ chpwd_check_deactivation() {
     fi
 
     _chpwd_venv_dir=""
-    #echo "chpwd.zsh: deactivating"
     deactivate
 }
 
@@ -50,7 +49,7 @@ chpwd() {
     fi
 
     _chpwd_activating=1
-    #echo "chpwd.zsh: ${OLDPWD} -> ${PWD}"
+    #echo "chpwd.zsh: ${OLDPWD} -> ${PWD} [VIRTUAL_ENV=${VIRTUAL_ENV}]"
 
     chpwd_check_deactivation
 
@@ -65,6 +64,10 @@ chpwd() {
         # activate if the .venv contents give a name different than the
         # name of the directory of the currently activated virtualenv, if any
         if [[ "${venv}" !=  "${VIRTUAL_ENV##*/}" ]]; then
+            # record that workon was invoked by this script, so that we can
+            # not deactivate when 'workon' was set up from the shell explicitly
+            export CHPWD_WORKON="${venv}"
+            #echo "chpwd.zh: workon ${venv}"
             workon "${venv}"
         fi
         # still need to set the venv dir even if the venv was already

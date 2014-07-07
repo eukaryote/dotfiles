@@ -2,13 +2,15 @@
 # This hook is run after activation of a just-created virtualenv.
 
 () {
+    local project_dir;
     # auto-install ipython immediately unless requested not to (e.g., tmp envs)
     if [ -z "${VIRTUALENV_NO_IPYTHON}" ]; then
         "${VIRTUAL_ENV}/bin/pip" install ipython
     fi
-    if [[ -n "${PROJECT_HOME}" && -n "${VIRTUAL_ENV}" ]]; then
+    project_dir="${PROJECT_HOME}/$(basename ${VIRTUAL_ENV})"
+    if [[ -n "${VIRTUAL_ENV}" && -d "${project_dir}" ]]; then
         if [[ ! -f "${VIRTUAL_ENV}/.project" ]]; then
-            echo "${PROJECT_HOME}/$(basename ${VIRTUAL_ENV})" > "${VIRTUAL_ENV}/.project"
+            echo "${project_dir}" > "${VIRTUAL_ENV}/.project"
         fi
     fi
 }

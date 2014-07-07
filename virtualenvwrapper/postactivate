@@ -2,23 +2,38 @@
 # This hook is run after every virtualenv is activated.
 
 
-# If PROJECT_HOME is set and there is a directory with the same name
-# as the currently activated virtualenv, then add that directory to
-# the PYTHONPATH and cd into it, and if that project directory contains a
-# 'bin' directory, add that to that PATH.
-() {
-    local project="${PROJECT_HOME}/$(basename ${VIRTUAL_ENV})"
+# If we're in a directory that has a '.venv' file, then we're in a
+# project directory for the virtualenv named in .venv, and will
+# adjust PYTHONPATH (and possibly PATH) for this project.
 
-    if [ -d "${project}" ]; then
-        # record original PYTHONPATH only if it was set (even if empty)
-        if [ -n "${PYTHONPATH+set}" ]; then
-            export PREACTIVATE_PYTHONPATH="${PYTHONPATH}"
-        fi
-        export PREACTIVATE_PWD="$(pwd)"
-        PYTHONPATH="${project}:${PYTHONPATH}"
-        export PYTHONPATH="${project%:}"
-        [ -d "${project}/bin" ] && export PATH="${project}/bin:${PATH}"
+() {
+    # nothing to do if there is no '.venv' file
+    if [ ! -s  .venv ]; then
+        return 0
     fi
+    local project="$(pwd)"
+    #echo "postactivate: project='${project}'"
+
+    # any env vars changed here should have had their original values saved in
+    # the 'preactivate' script so they can be restored in 'postdeactivate'.
+
+    # add bin and/or scripts to PATH
+    [[ -d "${project}/bin" || -d "${project}/scripts" ]] && {
+        for subdir in bin scripts; do
+            if [ -d "${project}/${subdir}" ]; then
+                #echo "PATH += '$project/$subdir'"
+                PATH="${project}/${subdir}:${PATH}"
+            fi
+        done
+    }
+
+    # add 'src' subdir to PYTHONPATH if it exists, else add current dir
+    if [ -d "${project}/src" ]; then
+        PYTHONPATH="${project}/src:${PYTHONPATH}"
+    else
+        PYTHONPATH="${project}:${PYTHONPATH}"
+    fi
+    export PYTHONPATH="${PYTHONPATH%:}"
 
     # The rehash may be needed if paths seem to be stale at times
     # rehash
