@@ -34,16 +34,17 @@ unsetopt pushd_ignore_dups # allow pushd dups
 setopt extended_glob # treat #, ~, ^ as part of pattern for filename generation
 
 # ===== History
-unsetopt append_history # multiple terminal sessions all append to same history
-unsetopt extended_history # save timestamp of command and duration
-unsetopt inc_append_history # add comamnds as they are typed, not at shell exit
-setopt hist_expire_dups_first # trim oldest dupes first
-unsetopt hist_ignore_dups # do write dupe events to history
+setopt append_history # multiple terminal sessions all append to same history
+unsetopt extended_history # don't save timestamp of command and duration
+unsetopt inc_append_history # don't add commands incrementally (only at exit)
+setopt hist_ignore_dups # don't write adjacent dupes to history
+unsetopt hist_ignore_all_dups # don't trim non-adjacent dupes
+unsetopt hist_expire_dups_first # don't trim oldest dupes first
 setopt hist_ignore_space # ignore history entries that begin with space
-setopt hist_find_no_dups # don't display search results already cycled twice
+unsetopt hist_find_no_dups # let hist-find show dupes (to preserve ordering)
 setopt hist_reduce_blanks # remove extra blanks before adding to history
 setopt hist_verify # don't execute, just expand history
-setopt share_history # imports new commands & appends typed commands to history
+unsetopt share_history # don't share runtime history across different shells
 
 # ===== Completion
 setopt always_to_end # move cursor to end of word when completing from middle
