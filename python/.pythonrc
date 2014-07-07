@@ -11,7 +11,8 @@ complement this file.
 
 import sys
 
-# No customizations if running under ipython
+# try to enable tab completion, history reload/save, and pretty printing
+# stdout output in a shell, but only if not running under ipython
 if 'IPython' not in sys.modules:
     try:
         import readline
@@ -29,6 +30,7 @@ if 'IPython' not in sys.modules:
         class Completer(object):
             def __init__(self):
                 import os
+                import readline
                 # Enable a History
                 self.HISTFILE = os.path.expanduser("%s/.pyhistory" %
                                                    os.environ["HOME"])
@@ -45,11 +47,15 @@ if 'IPython' not in sys.modules:
                 import readline
                 readline.write_history_file(self.HISTFILE)
 
-        c = Completer()
+        Completer()
 
-    # Enable Pretty Printing for stdout
+        del Completer
+        del readline
+        del rlcompleter
+
+    # use pprint for printing to stdout
     def my_displayhook(value):
-        if value is not None:
+        if value is not None:  # save last value
             try:
                 import __builtin__
                 __builtin__._ = value
