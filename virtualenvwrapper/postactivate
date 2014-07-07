@@ -7,10 +7,15 @@
 # adjust PYTHONPATH (and possibly PATH) for this project.
 
 () {
-    # nothing to do if there is no '.venv' file
-    if [ ! -s  .venv ]; then
+    # do nothing if .venv doesn't exist, but it can be empty if we don't wish
+    # to auto-activate a virtualenv, which is useful if have multiple
+    # virtualenvs for a given project and wish to use a '.project' file in
+    # each virtualenv and rely on 'workon venv_name' instead of 'cd'.
+    # We still want the PATH and PYTHONPATH changes in those cases.
+    if [ ! -f ".venv" ] ; then
         return 0
     fi
+
     local project="$(pwd)"
     #echo "postactivate: project='${project}'"
 

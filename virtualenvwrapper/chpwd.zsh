@@ -38,18 +38,25 @@ chpwd_check_deactivation() {
     fi
 
     _chpwd_venv_dir=""
+    unset CHPWD_WORKON
     deactivate
 }
 
 chpwd() {
     emulate -L zsh
 
-    if [[ -n "${_chpwd_activating}" ||  "${OLDPWD}" = "${PWD}" ]]; then
+    # return immediately if currently activating;
+    # this no longer returns immediately if OLDPWD is the same as PWD
+    # because when a new shell launches with the current directory being a
+    # .venv directory, it's nice to allow simply 'cd .' to activate the
+    # virtualenv, rather than requiring two cd commands to exit the directory
+    # and then re-enter it.
+    if [[ -n "${_chpwd_activating}" ]]; then
         return 0
     fi
 
     _chpwd_activating=1
-    #echo "chpwd.zsh: ${OLDPWD} -> ${PWD} [VIRTUAL_ENV=${VIRTUAL_ENV}]"
+    #echo "chpwd.zsh: ${OLDPWD} -> ${PWD}"
 
     chpwd_check_deactivation
 
@@ -60,10 +67,11 @@ chpwd() {
     fi
 
     local venv="$(cat .venv 2> /dev/null)"
-    if [[ -d "${WORKON_HOME}/${venv}" ]]; then
+    if [[ -n "${venv}" && -d "${WORKON_HOME}/${venv}" ]]; then
         # activate if the .venv contents give a name different than the
         # name of the directory of the currently activated virtualenv, if any
         if [[ "${venv}" !=  "${VIRTUAL_ENV##*/}" ]]; then
+        # if [[ "${venv}" !=  "${CHPWD_WORKON}" ]]; then
             # record that workon was invoked by this script, so that we can
             # not deactivate when 'workon' was set up from the shell explicitly
             export CHPWD_WORKON="${venv}"
