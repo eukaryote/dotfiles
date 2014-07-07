@@ -33,7 +33,10 @@ export HISTFILE=~/.zsh_history
 
 
 ## Python environment vars
-#
+
+# readline tab-completion
+export PYTHONSTARTUP=~/.pythonrc
+
 # I couldn't get vanilla virtualenvwrapper working with pyenv, because
 # the pyenv shims always exec the files in 'bin', which doesn't work
 # with virtualenvwrapper.sh and virtualenvwrapper_lazy.sh, since they

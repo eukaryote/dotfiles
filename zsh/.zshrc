@@ -34,9 +34,9 @@ unsetopt pushd_ignore_dups # allow pushd dups
 setopt extended_glob # treat #, ~, ^ as part of pattern for filename generation
 
 # ===== History
-setopt append_history # multiple terminal sessions all append to same history
+unsetopt append_history # multiple terminal sessions all append to same history
 unsetopt extended_history # save timestamp of command and duration
-setopt inc_append_history # add comamnds as they are typed, not at shell exit
+unsetopt inc_append_history # add comamnds as they are typed, not at shell exit
 setopt hist_expire_dups_first # trim oldest dupes first
 unsetopt hist_ignore_dups # do write dupe events to history
 setopt hist_ignore_space # ignore history entries that begin with space
@@ -112,16 +112,18 @@ ddu () {
 alias ga='git add'
 alias gp='git push'
 alias gl='git log'
-alias gpl="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias glp="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gs='git status'
 alias gd='git diff'
 alias gm='git commit -m'
 alias gma='git commit -am'
 alias gb='git branch'
+alias gb='git branch --remotes'
 alias gc='git checkout'
 alias gcb='git checkout -b'
 alias gra='git remote add'
 alias grr='git remote rm'
+alias grs='git remote show'
 alias gpu='git pull'
 alias gcl='git clone'
 alias gta='git tag -a -m'
