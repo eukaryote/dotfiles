@@ -1,0 +1,66 @@
+# ~/.pythonrc
+
+# Adapted from https://github.com/sontek/dotfiles/blob/master/_pythonrc.py
+
+"""
+This file is executed when the Python interactive shell is started if
+$PYTHONSTARTUP is in your environment and points to this file. It's just
+regular Python commands, so do what you will. Your ~/.inputrc file can greatly
+complement this file.
+"""
+
+import sys
+
+# No customizations if running under ipython
+if 'IPython' not in sys.modules:
+    try:
+        import readline
+        import rlcompleter  # noqa
+        import atexit
+    except ImportError:
+        print("You need readline, rlcompleter, and atexit")
+    else:
+        # Make this work properly in Darwin and Linux
+        if 'libedit' in readline.__doc__:
+            readline.parse_and_bind("bind ^I rl_complete")
+        else:
+            readline.parse_and_bind("tab: complete")
+
+        class Completer(object):
+            def __init__(self):
+                import os
+                # Enable a History
+                self.HISTFILE = os.path.expanduser("%s/.pyhistory" %
+                                                   os.environ["HOME"])
+
+                # Read the existing history if there is one
+                if os.path.exists(self.HISTFILE):
+                    readline.read_history_file(self.HISTFILE)
+
+                # Set max number of items that will be written to history file
+                readline.set_history_length(300)
+                atexit.register(self.savehist)
+
+            def savehist(self):
+                import readline
+                readline.write_history_file(self.HISTFILE)
+
+        c = Completer()
+
+    # Enable Pretty Printing for stdout
+    def my_displayhook(value):
+        if value is not None:
+            try:
+                import __builtin__
+                __builtin__._ = value
+            except ImportError:
+                __builtins__._ = value
+
+            import pprint
+            pprint.pprint(value)
+
+    sys.displayhook = my_displayhook
+
+del sys
+
+# sublimeconf: filetype=python
