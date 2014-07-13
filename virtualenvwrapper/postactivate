@@ -34,7 +34,7 @@
 
     # add 'tests' subdir to PYTHONPATH if it exists
     if [ -d "${project}/tests" ]; then
-        PYTHONPATH="${project}/tests:$P{PYTHONPATH}"
+        PYTHONPATH="${project}/tests:${PYTHONPATH}"
     fi
     # add 'src' subdir to PYTHONPATH if it exists, else add current dir
     if [ -d "${project}/src" ]; then
