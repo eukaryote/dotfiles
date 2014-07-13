@@ -142,16 +142,18 @@ alias gsh="git shortlog | grep -E '^[ ]+\w+' | wc -l"
 # gu shows a list of all developers and the number of commits they've made
 alias gu="git shortlog | grep -E '^[^ ]'"
 
-# history utilities
+# history convenience function (zsh requires '-n 1' to use full history)
 h() {
     if [[ -n "$1" ]]
     then
-        history | grep -E "$1"
+        history -n 1 | grep -E "$@"
     else
-        history
+        history -n 1
     fi
 }
 
+alias lstr='ls -ltr'
+alias lstra='ls -ltra'
 # show environment in sorted order with color-highlight of KEY
 # (don't use 'env' as alias, because it interferes with z.sh)
 alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
@@ -297,6 +299,11 @@ pyenv virtualenvwrapper_lazy
 # (or entering a descendent of such a directory) and deactivate the virtualenv
 # when changing to a directory not inside the virtualenv.
 source "${VIRTUALENVWRAPPER_CONF_DIR}/chpwd.zsh"
+
+
+alias khreload="rm -rf $HOME/.knowhow/data && knowhow load < $HOME/knowhow.dump"
+alias khd="knowhow dump"
+alias khl="knowhow load < $HOME/knowhow.dump"
 
 
 ## sublimeconf: filetype=shell
