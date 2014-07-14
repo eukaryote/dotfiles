@@ -223,8 +223,16 @@ spin() {
     cleanup
 }
 
+# launch a process detached from the terminal, with stdout and stderr both
+# being sent to a file in $TMPDIR/out with name of first param (program).
+launch() {
+    mkdir -p ${TMPDIR}/out
+    "$@" </dev/null >/${TMPDIR}/out/$(basename "$1") 2>&1 &
+}
 
 # ls variants
+alias ls='ls --group-directories-first --color=auto'
+alias la='ls -1A'
 alias ll='ls -lh'
 alias lla='ll -a'
 alias lls='ll -s'
