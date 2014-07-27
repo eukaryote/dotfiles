@@ -6,6 +6,8 @@
 		"Python Checker",
 		"Python Flake8 Lint",
 		"Search Stack Overflow",
+		"SublimeLinter",
+		"SublimeLinter-pyflakes",
 		"Theme - Soda",
 		"Theme - Spacefunk",
 		"TodoReview",
