@@ -1,12 +1,13 @@
 {
 	"auto_complete_commit_on_tab": false,
-	"color_scheme": "Packages/User/Monokai Soda.tmTheme",
+	"color_scheme": "Packages/User/Monokai Soda (SL).tmTheme",
 	"detect_indentation": false,
 	"ensure_newline_at_eof_on_save": true,
 	"font_size": 10,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
+		"Python Flake8 Lint",
 		"Vintage"
 	],
 	"old_color_scheme": "Packages/Theme - Spacefunk/Future Funk (Blue Monday).tmTheme",
