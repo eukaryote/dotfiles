@@ -160,10 +160,6 @@ alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
 alias envg="env | sort | grep"
 alias envgi="env | sort | grep -i"
 
-LESS_LONG="--LONG-PROMPT --ignore-case --hilite-unread --RAW-CONTROL-CHARS"
-LESS_SHORT="${LESS_LONG} --quit-if-one-screen --no-init"
-export LESS="${LESS_LONG}"  # replace what prezto set
-
 # page through a single file using less, quitting immediately while leaving
 # the `less` output on screen if the file contains no more than one page
 # of text, or allowing zsh to restore the original screen state on exit
