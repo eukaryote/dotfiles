@@ -313,5 +313,8 @@ alias khreload="rm -rf $HOME/.knowhow/data && knowhow load < $HOME/knowhow.dump"
 alias khd="knowhow dump"
 alias khl="knowhow load < $HOME/knowhow.dump"
 
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+    . $HOME/.nix-profile/etc/profile.d/nix.sh;
+fi
 
 ## sublimeconf: filetype=shell
