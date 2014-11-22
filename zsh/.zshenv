@@ -17,7 +17,6 @@ export REPODIR="${REPODIR:-$HOME/repos}"
 
 # Include my bin dir on path before sourcing anything, so that pyenv
 # and other things that need to be at the head of the path end up there
-#export PATH=$HOME/bin/:${PATH}
 path=($HOME/bin $path)
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
@@ -60,5 +59,7 @@ export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
+
+path=($path /opt/terraform/default /opt/consul/default /opt/packer/default)
 
 ## sublimeconf: filetype=shell
