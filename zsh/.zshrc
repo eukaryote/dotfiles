@@ -142,20 +142,18 @@ alias gsh="git shortlog | grep -E '^[ ]+\w+' | wc -l"
 # gu shows a list of all developers and the number of commits they've made
 alias gu="git shortlog | grep -E '^[^ ]'"
 
-# history convenience function (zsh requires '-n 1' to use full history)
+# history convenience function (zsh requires first=0 below to use full history)
 h() {
     if [[ -n "$1" ]]
     then
-        history -n 1 | grep -E "$@"
+        history 0 | grep -P "$@"
     else
-        history -n 1
+        history 0
     fi
 }
 
-alias lstr='ls -ltr'
-alias lstra='ls -ltra'
 # show environment in sorted order with color-highlight of KEY
-# (don't use 'env' as alias, because it interferes with z.sh)
+# (don't use 'env' as alias, because it interferes with zsh)
 alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
 alias envg="env | sort | grep"
 alias envgi="env | sort | grep -i"
@@ -223,8 +221,10 @@ spin() {
 # being sent to a file in $TMPDIR/out with name of first param (program).
 launch() {
     mkdir -p ${TMPDIR}/out
-    "$@" </dev/null >/${TMPDIR}/out/$(basename "$1") 2>&1 &
+    nohup "$@" > /${TMPDIR}/out/$(basename "$1") &
 }
+# overrides the prezto 'l' alias
+alias l=launch
 
 # ls variants
 alias ls='ls --group-directories-first --color=auto'
@@ -239,11 +239,12 @@ alias llt='ll -t'
 alias llta='llt -A'
 alias lltr='llt -r'
 alias lltra='lltr -A'
+alias lstr='ls -ltr'
+alias lstra='ls -ltrA'
 
 alias manh='man --html'
 
 psg() { ps -ef | grep "$@" | grep -v grep | more; }
-psgi() { ps -ef | grep -i "$@" | grep -v grep | more; }
 
 # redo last command but pipe it to less
 alias redol="!! | less"
