@@ -217,11 +217,12 @@ spin() {
     cleanup
 }
 
-# launch a process detached from the terminal, with stdout and stderr both
-# being sent to a file in $TMPDIR/out with name of first param (program).
+# launch process disowned and detached from terminal, with stdout and stderr
+# both being sent to a file in $TMPDIR/out with name of first param (program).
 launch() {
     mkdir -p ${TMPDIR}/out
-    nohup "$@" > /${TMPDIR}/out/$(basename "$1") &
+    # the '&|' is zsh syntax for disowning the job
+    "$@" </dev/null >${TMPDIR}/out/$(basename $1) 2>&1 &|
 }
 # overrides the prezto 'l' alias
 alias l=launch
