@@ -1,22 +1,22 @@
 {
-    "installed_packages":
-    [
-        "GoSublime",
-        "IJulia",
-        "lispindent",
-        "nginx",
-        "Python Checker",
-        "Python Flake8 Lint",
-        "Racket",
-        "Search Stack Overflow",
-        "SML (Standard ML)",
-        "SublimeLinter",
-        "SublimeLinter-pyflakes",
-        "Theme - Soda",
-        "Theme - Spacefunk",
-        "TodoReview",
-        "TrailingSpaces",
-        "Vintageous",
-        "Zen Tabs"
-    ]
+	"installed_packages":
+	[
+		"GoSublime",
+		"IJulia",
+		"lispindent",
+		"nginx",
+		"Python Checker",
+		"Python Flake8 Lint",
+		"Racket",
+		"Search Stack Overflow",
+		"SML (Standard ML)",
+		"SublimeLinter",
+		"SublimeLinter-pyflakes",
+		"Theme - Soda",
+		"Theme - Spacefunk",
+		"TodoReview",
+		"TrailingSpaces",
+		"Vintageous",
+		"Zen Tabs"
+	]
 }
