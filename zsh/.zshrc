@@ -311,6 +311,23 @@ alias khreload="rm -rf $HOME/.knowhow/data && knowhow load < $HOME/knowhow.dump"
 alias khd="knowhow dump"
 alias khl="knowhow load < $HOME/knowhow.dump"
 
+# Use pgrep to find the pid of the first arg, and if found, print the
+# environment of the process to stdout using the procfs environ file,
+# which only reflects the environment when the process was started.
+# If called with no args, then print the environment of the current process.
+lsenv() { 
+    if [[ -n "$1" ]]; then
+        pid="$(pgrep $1)"
+        if [[ -z "$pid" ]]; then
+            echo "no process found: $1"
+            return 1
+        fi
+    else
+        pid="self"
+    fi
+    cat /proc/$pid/environ | tr '\000' '\n'
+}
+
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
     . $HOME/.nix-profile/etc/profile.d/nix.sh;
 fi
