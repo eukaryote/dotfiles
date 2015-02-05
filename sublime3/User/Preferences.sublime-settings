@@ -1,7 +1,7 @@
 {
 	"auto_complete_commit_on_tab": false,
-	"color_scheme": "Packages/User/Monokai Soda (SL).tmTheme",
-	"detect_indentation": false,
+	"color_scheme": "Packages/User/Monokai Soda (SL) (Flake8Lint).tmTheme",
+	"detect_indentation": true,
 	"ensure_newline_at_eof_on_save": true,
 	"font_size": 10,
 	"highlight_modified_tabs": true,
