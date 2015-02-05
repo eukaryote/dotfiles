@@ -1,10 +1,14 @@
 {
+	"in_process_packages":
+	[
+	],
 	"installed_packages":
 	[
 		"GoSublime",
 		"IJulia",
 		"lispindent",
 		"nginx",
+		"Package Control",
 		"Python Checker",
 		"Python Flake8 Lint",
 		"Racket",
