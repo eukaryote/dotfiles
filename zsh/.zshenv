@@ -30,6 +30,7 @@ export HISTSIZE=10000
 export SAVEHIST=9000
 export HISTFILE=~/.zsh_history
 
+export SAGEROOT=/opt/sage
 
 ## Python environment vars
 
@@ -60,6 +61,6 @@ export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
 
-path=($path /opt/terraform/default /opt/consul/default /opt/packer/default)
+path=($path /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/.local/bin)
 
 ## sublimeconf: filetype=shell
