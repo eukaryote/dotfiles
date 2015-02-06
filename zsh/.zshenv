@@ -32,6 +32,11 @@ export HISTFILE=~/.zsh_history
 
 export SAGEROOT=/opt/sage
 
+# Editors
+export EDITOR=/usr/bin/vim
+export SUDO_EDITOR=${EDITOR}
+export VISUAL=/usr/bin/subl
+
 ## Python environment vars
 
 # readline tab-completion
