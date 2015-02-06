@@ -61,6 +61,6 @@ export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
 
-path=($path /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/.local/bin)
+path=($path /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/.local/bin ${HOME}/.gem/ruby/2.1.0/bin)
 
 ## sublimeconf: filetype=shell
