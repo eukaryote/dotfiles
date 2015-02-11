@@ -63,9 +63,15 @@ export VIRTUALENVWRAPPER_VIRTUALENV="pyvenv"
 # export PREZTO_PYTHON_NO_VIRTUALENVWRAPPER="true"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
+# golang conf
+path=($path /usr/local/go/bin)
+[[ ! -d ~/go ]] && mkdir ~/go
+export GOPATH=~/go
+
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
 
+# additional path dirs
 path=($path /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/.local/bin ${HOME}/.gem/ruby/2.1.0/bin)
 
 ## sublimeconf: filetype=shell
