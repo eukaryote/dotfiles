@@ -15,15 +15,10 @@ export ZPROMPTDIR="${ZDOTDIR}/prompts"
 # Directory in which I store git and other repos
 export REPODIR="${REPODIR:-$HOME/repos}"
 
-# Include my bin dir on path before sourcing anything, so that pyenv
-# and other things that need to be at the head of the path end up there
-path=($HOME/bin $path)
-
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
-
 
 # History vars
 export HISTSIZE=10000
@@ -64,14 +59,14 @@ export VIRTUALENVWRAPPER_VIRTUALENV="pyvenv"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
 # golang conf
-path=($path /usr/local/go/bin)
 [[ ! -d ~/go ]] && mkdir ~/go
 export GOPATH=~/go
+path=($path /usr/local/go/bin ${GOPATH}/bin)
 
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
 
 # additional path dirs
-path=($path /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/.local/bin ${HOME}/.gem/ruby/2.1.0/bin)
+path=($path /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/.local/bin ${HOME}/.gem/ruby/2.1.0/bin)
 
 ## sublimeconf: filetype=shell
