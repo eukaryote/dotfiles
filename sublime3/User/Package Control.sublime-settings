@@ -4,6 +4,7 @@
 	],
 	"installed_packages":
 	[
+		"ApplySyntax",
 		"GoSublime",
 		"IJulia",
 		"lispindent",
