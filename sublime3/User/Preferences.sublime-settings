@@ -7,8 +7,8 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"Vintage",
-		"Python Checker"
+		"Python Checker",
+		"Vintage"
 	],
 	"old_color_scheme": "Packages/Theme - Spacefunk/Future Funk (Blue Monday).tmTheme",
 	"old_theme": "Spacefunk (Blue Monday).sublime-theme",
