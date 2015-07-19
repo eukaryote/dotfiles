@@ -143,12 +143,13 @@ alias gsh="git shortlog | grep -E '^[ ]+\w+' | wc -l"
 alias gu="git shortlog | grep -E '^[^ ]'"
 
 # history convenience function (zsh requires first=0 below to use full history)
+alias history='\history 0'
 h() {
     if [[ -n "$1" ]]
     then
-        history 0 | grep -P "$@"
+        \history 0 | grep -P "$@"
     else
-        history 0
+        \history 0
     fi
 }
 
