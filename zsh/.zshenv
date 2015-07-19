@@ -61,7 +61,7 @@ export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 # golang conf
 [[ ! -d ~/go ]] && mkdir ~/go
 export GOPATH=~/go
-path=($path /usr/local/go/bin ${GOPATH}/bin /opt/iojs/default/bin)
+path=($path /usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin)
 
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
