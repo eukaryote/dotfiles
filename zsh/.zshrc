@@ -159,6 +159,27 @@ alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
 alias envg="env | sort | grep"
 alias envgi="env | sort | grep -i"
 
+# use elinks to open python doc for module given as 1st arg
+# (defaults to 'index', which lists all modules), optionally
+# using a second arg like '2', '3', or '2.7' to view the docs
+# for a specific python version (defaults to '3').
+pymod() {
+    local module="${1:-index}"
+    local version="${2:-3}"
+    local url="https://docs.python.org/${version}/library/${module}.html"
+    echo "${url}"
+    elinks "${url}"
+}
+
+# use elinks to open the python language reference page for the python
+# version given as the first arg, which defaults to '3' if not given.
+pyref() {
+    local version="${1:-3}"
+    local url="https://docs.python.org/${version}/reference/"
+    echo "${url}"
+    elinks "${url}"
+}
+
 # page through a single file using less, quitting immediately while leaving
 # the `less` output on screen if the file contains no more than one page
 # of text, or allowing zsh to restore the original screen state on exit
