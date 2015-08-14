@@ -63,6 +63,9 @@ export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 export GOPATH=~/go
 path=($path /usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin)
 
+# rust conf
+export RUST_SRC_PATH=/usr/local/src/rust/src
+
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
 
