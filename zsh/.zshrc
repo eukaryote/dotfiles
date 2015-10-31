@@ -242,7 +242,7 @@ spin() {
 # launch process disowned and detached from terminal, with stdout and stderr
 # both being sent to a file in $TMPDIR/out with name of first param (program).
 launch() {
-    mkdir -p ${TMPDIR}/out
+    command mkdir -p ${TMPDIR}/out
     # the '&|' is zsh syntax for disowning the job
     "$@" </dev/null >${TMPDIR}/out/$(basename $1) 2>&1 &|
 }
@@ -328,6 +328,8 @@ pyenv virtualenvwrapper_lazy
 # when changing to a directory not inside the virtualenv.
 source "${VIRTUALENVWRAPPER_CONF_DIR}/chpwd.zsh"
 
+# pickup cabal helper aliases if present:
+test -f "$HOME/repos/ghcPkgUtils/ghcPkgUtils.sh" && source "$HOME/repos/ghcPkgUtils/ghcPkgUtils.sh"
 
 alias khreload="rm -rf $HOME/.knowhow/data && knowhow load < $HOME/knowhow.dump"
 alias khd="knowhow dump"
