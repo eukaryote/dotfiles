@@ -1,9 +1,12 @@
 {
+	"bootstrapped": true,
 	"in_process_packages":
 	[
 	],
 	"installed_packages":
 	[
+		"Ansible",
+		"AnsibleSnippets",
 		"ApplySyntax",
 		"Elixir",
 		"ElixirSublime",
@@ -19,8 +22,10 @@
 		"Racket",
 		"RestructuredText Improved",
 		"Rust",
+		"RustAutoComplete",
 		"Search Stack Overflow",
 		"SML (Standard ML)",
+		"SublimeHaskell",
 		"SublimeLinter",
 		"SublimeLinter-pyflakes",
 		"Theme - Soda",
