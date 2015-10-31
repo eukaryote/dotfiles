@@ -58,6 +58,10 @@ export VIRTUALENVWRAPPER_VIRTUALENV="pyvenv"
 # export PREZTO_PYTHON_NO_VIRTUALENVWRAPPER="true"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
+# remove env var set by ubuntu
+unset JAVA_TOOL_OPTIONS
+unset GPG_AGENT_INFO
+
 # golang conf
 [[ ! -d ~/go ]] && mkdir ~/go
 export GOPATH=~/go
