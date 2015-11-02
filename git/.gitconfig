@@ -4,6 +4,7 @@ ui = true
 [core]
 pager = less -r
 editor = vim
+	excludesfile = ~/.gitignore_global
 
 [user]
 email = sapientdust+github@gmail.com
