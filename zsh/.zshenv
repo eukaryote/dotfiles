@@ -20,6 +20,8 @@ if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
+[ -z "$TMUX" ] && export TERM=xterm-256color
+
 # History vars
 export HISTSIZE=10000
 export SAVEHIST=9000
