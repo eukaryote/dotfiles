@@ -72,6 +72,15 @@ path=($path /usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin)
 # rust conf
 export RUST_SRC_PATH=/usr/local/src/rust/src
 
+# run gpg-agent if not running, or source env file if already running
+if test -f $XDG_RUNTIME_DIR/gpg-agent-info && kill -0 $(head -n 1 $XDG_RUNTIME_DIR/gpg-agent-info | cut -d: -f2) 2>/dev/null ; then
+    eval $(< $XDG_RUNTIME_DIR/gpg-agent-info)
+else
+    eval $(gpg-agent --daemon --enable-ssh-support --write-env-file $XDG_RUNTIME_DIR/gpg-agent-info)
+fi
+export GPG_AGENT_INFO
+export SSH_AUTH_SOCK
+
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
 
