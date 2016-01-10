@@ -135,6 +135,8 @@ alias gv='git log --pretty=format:'%s' | cut -d " " -f 1 | sort | uniq -c | sort
 alias gh='git hist'
 alias gt='git today'
 
+alias gpg=gpg2
+
 # curiosities
 # gsh shows the number of commits for the current repos for all developers
 alias gsh="git shortlog | grep -E '^[ ]+\w+' | wc -l"
@@ -339,7 +341,7 @@ alias khl="knowhow load < $HOME/knowhow.dump"
 # environment of the process to stdout using the procfs environ file,
 # which only reflects the environment when the process was started.
 # If called with no args, then print the environment of the current process.
-lsenv() { 
+lsenv() {
     if [[ -n "$1" ]]; then
         pid="$(pgrep $1)"
         if [[ -z "$pid" ]]; then
