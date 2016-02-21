@@ -87,4 +87,6 @@ export SSH_AUTH_SOCK
 # additional path dirs
 path=($path /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/.local/bin ${HOME}/.gem/ruby/2.1.0/bin)
 
+# additional man dirs
+export MANPATH=":${HOME}/.local/share/man"
 ## sublimeconf: filetype=shell
