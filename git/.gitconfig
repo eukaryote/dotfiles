@@ -1,27 +1,37 @@
+# vim: noexpandtab
 [color]
-ui = true
+	ui = true
 
 [core]
-pager = less -r
-editor = vim
+	pager = less -r
+	editor = vim
 	excludesfile = ~/.gitignore_global
 
 [user]
-email = sapientdust+github@gmail.com
-name = eukaryote
+	email = sapientdust+github@gmail.com
+	name = eukaryote
 
 [push]
-default = simple
+	default = simple
 
 [alias]
-root = rev-parse --show-toplevel
-hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-type = cat-file -t
-dump = cat-file -p
-# git change-commits GIT_COMMITTER_NAME "old name" "new name"
-change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [ \\"$echo $VAR\\" = \\"$OLD\\" ]; then export $VAR=\\"$NEW\\"; fi\" $@; }; f" ]
-remove-file = "!f() { git filter-branch -f --index-filter \"git rm --cached --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
+	root = rev-parse --show-toplevel
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	# git change-commits GIT_COMMITTER_NAME "old name" "new name"
+	change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [ \\"$echo $VAR\\" = \\"$OLD\\" ]; then export $VAR=\\"$NEW\\"; fi\" $@; }; f" ]
+	remove-file = "!f() { git filter-branch -f --index-filter \"git rm --cached --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
+	graph = log --all --graph --decorate --oneline -n30
+	changes = log --name-status HEAD..
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
+	graph = log --all --graph --decorate --oneline -n30
+
 [diff]
+	algorithm = patience
 	submodule = log
+
 [log]
 	follow = true
