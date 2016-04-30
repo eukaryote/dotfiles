@@ -80,6 +80,7 @@ else
 fi
 export GPG_AGENT_INFO
 export SSH_AUTH_SOCK
+export GPG_TTY=$(tty)
 
 # add directory for custom functions/completions to fpath
 [[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
