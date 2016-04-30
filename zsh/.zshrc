@@ -340,4 +340,8 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
     . $HOME/.nix-profile/etc/profile.d/nix.sh;
 fi
 
+function xinput() {
+    echo "disabled"
+    return 1
+}
 ## sublimeconf: filetype=shell
