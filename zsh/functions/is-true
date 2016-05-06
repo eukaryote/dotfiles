@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+# Determine whether arg is trueish (source: prezto project)
+
+[[ -n "$1" && "$1" == (1|[Yy]([Ee][Ss]|)|[Tt]([Rr][Uu][Ee]|)|[Oo]([Nn]|)) ]]

@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+# if zenity is intalled, then popup a reminder after $1 seconds;
+# e.g., `remind 160 tea is ready`
+
+if ! test -x $(which zenity 2> /dev/null)
+then
+    echo "zenity is not on PATH or not not executable"
+    return 1
+fi
+if [ $# -lt 2 ]
+then
+    echo "Usage: ./remind.sh <seconds> \"Remind Message...\""
+    return 1
+fi
+seconds=$1
+shift
+# run in background as a subprocess so we can redirect to /dev/null
+# and not show the PID of the process that is still running
+({
+    sleep ${seconds} </dev/null &>/dev/null &&
+    zenity --info --title="Remind" --text="$*" </dev/null &>/dev/null
+} &) > /dev/null
+echo "$(date):  Reminder set for ${seconds} seconds"

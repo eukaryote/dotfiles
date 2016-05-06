@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+# use elinks to open python doc for module given as 1st arg
+# (defaults to 'index', which lists all modules), optionally
+# using a second arg like '2', '3', or '2.7' to view the docs
+# for a specific python version (defaults to '3').
+
+local module="${1:-index}"
+local version="${2:-3}"
+local url="https://docs.python.org/${version}/library/${module}.html"
+echo "${url}"
+elinks "${url}"

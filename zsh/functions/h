@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+# Search history using perl-style regexp if args given, else show full history.
+
+if [[ -n "$1" ]]; then
+    builtin history 0 | grep -P "$@"
+else
+    builtin history 0
+fi

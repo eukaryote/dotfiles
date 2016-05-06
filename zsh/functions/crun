@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+# compile a single-file c program and run the output executable, passing args
+# after the first to the executable
+local filepath="$1"
+ccompile "${filepath}"
+shift
+cd "$(dirname ${filepath})"
+./$(basename "${filepath}" .c) "$@"

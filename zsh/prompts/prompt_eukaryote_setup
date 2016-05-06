@@ -1,18 +1,6 @@
-#
-# A theme based on Steve Losh's Extravagant Prompt with vcs_info integration.
-#
-# Authors:
-#   eukaryote <sapientdust+github@gmail.com>
-#   Marcello Seri <mseri@mseri.me>
-#   Steve Losh <steve@stevelosh.com>
-#   Bart Trojanowski <bart@jukie.net>
-#   Brian Carper <brian@carper.ca>
-#   mseri <mseri@gmail.com>
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+# Custom prompt adapted from sorin prompt of prezto project
 
 local return_code="%(?..%B%F{red}%? ↵%b%{$reset_colors%})"
-
 
 function prompt_eukaryote_precmd {
   # Check for untracked files or updated submodules since vcs_info does not.
@@ -30,7 +18,6 @@ function prompt_eukaryote_precmd {
     python-info
   fi
 }
-
 
 function prompt_eukaryote_setup {
   setopt LOCAL_OPTIONS
@@ -84,11 +71,8 @@ function prompt_eukaryote_setup {
   zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
   zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
-  # Set python-info parameters.
-  zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
-
   # Define prompts, only including user@host info in an SSH shell
-  local userhostinfo
+  local userhostinfo=""
   if [[ -n "${SSH_CONNECTION}" ]]; then
     userhostinfo="${_prompt_eukaryote_colors[3]}%n%f@${_prompt_eukaryote_colors[2]}%m%f "
   fi

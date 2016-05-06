@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+# Print current branch (source: prezto project)
+
+if ! git rev-parse 2> /dev/null; then
+    return 1
+fi
+
+local ref="$(git symbolic-ref HEAD 2> /dev/null)"
+
+if [[ -n "$ref" ]]; then
+    print "${ref#refs/heads/}"
+    return 0
+else
+    return 1
+fi

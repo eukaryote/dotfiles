@@ -1,34 +1,21 @@
+# Execute commands at start of interactive session (login and non-login).
 #
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#   eukaryote <sapientdust+github@gmail.com>
-#
-
-# This relies on my a zstyle option I added to my prezto fork to
-# avoid doing the virtualenvwrapper initialization that the prezto
-# python module performs, which crashes zsh when used in conjunction
-# with pyenv. The solution is to use the pyenv-virtualenvwrapper plugin
-# for pyenv and ensure that prezto doesn't do the initialization.
-zstyle ':prezto:module:python' skip-virtualenvwrapper-init yes
-
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# Settings below adapted from
-# http://zanshin.net/2013/02/02/zsh-configuration-from-the-ground-up/
+# This is sourced after env (for interactive login and non-login sessions)
+# and after zprofile (for interactive login sessions) and before zlogin
+# (for interactive login sessions).
 
 # ===== Basics
 setopt no_beep # don't beep on error
 setopt interactive_comments # Allow comments even in interactive shells
+setopt notify # report status of background jobs immediately
 
 # ===== Changing Directories
 unsetopt auto_cd # disable `foo` as abbr for `cd foo` when 'foo' is in cdpath
-setopt cdablevarS # can cd to $foo using `cd foo` if $foo is a valid directory
+setopt cdablevars # can cd to $foo using `cd foo` if $foo is a valid directory
 unsetopt pushd_ignore_dups # allow pushd dups
+setopt auto_pushd  # push old dir onto stack on cd
+setopt pushd_silent # don't print on push
+setopt pushd_to_home # push to home when no arg given
 
 # ===== Expansion and Globbing
 setopt extended_glob # treat #, ~, ^ as part of pattern for filename generation
@@ -74,229 +61,18 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name
 
-
-# compile a single-file c program
-ccompile() {
-    local dirpath="$(dirname $1)"
-    local filename="$(basename $1)"
-    local outname="$(basename ${filename} .c)"
-
-    # echo "dirpath: ${dirpath}"
-    # echo "filename: ${filename}"
-    # echo "outame: ${outname}"
-
-    if [[ "${outname}" == "${filename}" ]]; then
-        echo "usage: ccompile FILE.c"
-        return 1
-    fi
-    (cd "${dirpath}" && gcc -Wall -Wextra -O2 -g -pedantic -std=c11 -o "${outname}" "${filename}")
+function xinput() {
+    echo "disabled"
+    return 1
 }
 
-# compile a single-file c program and run the output executable, passing args after
-# the first to the executable
-crun() {
-    filepath="$1"
-    ccompile "${filepath}"
-    shift
-    (cd "$(dirname ${filepath})" && ./$(basename "${filepath}" .c) "$@")
-}
-
-# show human-readable listing of sub-directory sizes in descending order
-# of size, using $1 as the directory or defaulting to '.' if none given
-ddu () {
-    cd ${1:-.} && du -hs * | sort -h
-}
-
-# -------------------------------------------------------------------
-# Git
-# -------------------------------------------------------------------
-alias glb="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias gH='less ~/.zprezto/modules/git/alias.zsh'
-
-# leverage aliases from ~/.gitconfig
-alias gh='git hist'
-alias gt='git today'
-
-alias gpg=gpg2
-
-# curiosities
-# gsh shows the number of commits for the current repos for all developers
-alias gsh="git shortlog | grep -E '^[ ]+\w+' | wc -l"
-
-# gu shows a list of all developers and the number of commits they've made
-alias gu="git shortlog | grep -E '^[^ ]'"
-
-# history convenience function (zsh requires first=0 below to use full history)
-alias history='\history 0'
-h() {
-    if [[ -n "$1" ]]
-    then
-        \history 0 | grep -P "$@"
-    else
-        \history 0
-    fi
-}
-
-# show environment in sorted order with color-highlight of KEY
-# (don't use 'env' as alias, because it interferes with zsh)
-alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
-alias envg="env | sort | grep"
-alias envgi="env | sort | grep -i"
-
-# use elinks to open python doc for module given as 1st arg
-# (defaults to 'index', which lists all modules), optionally
-# using a second arg like '2', '3', or '2.7' to view the docs
-# for a specific python version (defaults to '3').
-pymod() {
-    local module="${1:-index}"
-    local version="${2:-3}"
-    local url="https://docs.python.org/${version}/library/${module}.html"
-    echo "${url}"
-    elinks "${url}"
-}
-
-# use elinks to open the python language reference page for the python
-# version given as the first arg, which defaults to '3' if not given.
-pyref() {
-    local version="${1:-3}"
-    local url="https://docs.python.org/${version}/reference/"
-    echo "${url}"
-    elinks "${url}"
-}
-
-# page through a single file using less, quitting immediately while leaving
-# the `less` output on screen if the file contains no more than one page
-# of text, or allowing zsh to restore the original screen state on exit
-# if the file contains more than one full page of text.
-sless() {
-    local page="$(tput lines)"
-    local less="$(/bin/which less)"  # avoid aliases/functions
-
-    test "$#" -eq "1" || {
-        echo "usage: sless PATH"
-        return 1
-    }
-
-    if [ "$(head -n $((${page} + 1)) $1 | wc -l)" -le "${page}" ]; then
-        # If no more than a page of text, less should quit immediately after
-        # showing the output, and '--no-init' needs to be included
-        # to prevent zsh from clearing the output on exit and restoring
-        # the original screen state, which means the less output disappears.
-        LESS="${LESS_SHORT}" ${less} $1
-    else
-        # If more than a page of text, less should behave as normally under
-        # zsh, where we don't prevent init and don't quit if one screen.
-        # In this case, zsh will restore the original screen state and not
-        # show any of the paged output. Ideally, I'd like to still display
-        # only the last page of less output in this case, while still leaving
-        # the original terminal contents before invoking less no further than
-        # a page away in the terminal, but not investigating for now.
-        LESS="${LESS_LONG}" ${less} $1
-    fi
-}
-
-
-# Print a spinner at the current cursor location for as long as the process
-# with pid equal to the 1st param is running. If no params are passed,
-# use the pid of the last background process launched.
-spin() {
-    local pid="${1:-$!}"
-    local period="0.1"
-    local spin_chars='|/-\'
-    local saved_traps=$(trap)  # current traps, for restoring on completion
-    local position=1           # current position within spin_chars
-
-    cleanup() {
-        tput cnorm             # show cursor again
-        echo -n -e '\b'        # erase last printed spinner char
-        eval "${saved_traps}"  # restore original trap state
-    }
-    tput civis                 # hide cursor while spinning
-    trap "cleanup; return 1" INT EXIT  # ensure cleanup occurs
-
-    echo -n " "  # forward 1 char, to prepare for 1st backspace
-    while $(kill -0 $pid > /dev/null 2>&1); do
-        position=$(($((position+1)) % 4))
-        echo -n - "\b${spin_chars:$position:1}"
-        sleep $period
+function source-if {
+    for p in "$@"; do
+        if [[ -f "$p" ]]; then
+            source "$p"
+        fi
     done
-    cleanup
 }
-
-# launch process disowned and detached from terminal, with stdout and stderr
-# both being sent to a file in $TMPDIR/out with name of first param (program).
-launch() {
-    command mkdir -p ${TMPDIR}/out
-    # the '&|' is zsh syntax for disowning the job
-    "$@" </dev/null >${TMPDIR}/out/$(basename $1) 2>&1 &|
-}
-# overrides the prezto 'l' alias
-alias l=launch
-
-# ls variants
-alias ls='ls --group-directories-first --color=auto'
-alias la='ls -1A'
-alias ll='ls -lh'
-alias lla='ll -a'
-alias lls='ll -s'
-alias llsa='lls -A'
-alias llsr='lls -r'
-alias llsra='llsr -A'
-alias llt='ll -t'
-alias llta='llt -A'
-alias lltr='llt -r'
-alias lltra='lltr -A'
-alias lstr='ls -ltr'
-alias lstra='ls -ltrA'
-
-alias manh='man --html'
-
-psg() { ps -ef | grep "$@" | grep -v grep | more; }
-
-# redo last command but pipe it to less
-alias redol="!! | less"
-
-# zsh reload commands
-alias reload=". ${ZDOTDIR:-$HOME}/.zshrc"
-alias reload!="exec zsh"
-
-# undo the annoying aliasing of rm as 'rm -i' that prezto sets up
-alias rm="nocorrect rm"
-
-# if zenity is intalled, then popup a reminder after $1 seconds;
-# e.g., `remind 160 tea is ready`
-remind() {
-    if ! test -x $(which zenity 2> /dev/null)
-    then
-        echo "zenity is not on PATH or not not executable"
-        return 1
-    fi
-    if [ $# -lt 2 ]
-    then
-        echo "Usage: ./remind.sh <seconds> \"Remind Message...\""
-        return 1
-    fi
-    seconds=$1
-    shift
-    # run in background as a subprocess so we can redirect to /dev/null
-    # and not show the PID of the process that is still running
-    ({
-        sleep ${seconds} </dev/null &>/dev/null &&
-        zenity --info --title="Remind" --text="$*" </dev/null &>/dev/null
-    } &) > /dev/null
-    echo "$(date):  Reminder set for ${seconds} seconds"
-}
-
-# initialize z.sh (https://github.com/rupa/z)
-# source $REPODIR/z/z.sh
-
-VIRTUALENVWRAPPER_CONF_DIR="$(readlink -m -n ${ZDOTDIR}/../virtualenvwrapper)"
-
-# Set path to custom hook scripts for things postactivate events
-export VIRTUALENVWRAPPER_HOOK_DIR="${VIRTUALENVWRAPPER_CONF_DIR}"
-
-# Don't init the base pyenv here, because prezto already does it
-# in the 'python' module.
 
 # Initalize virtualenvwrapper via the pyenv-virtualenvwrapper plugin;
 # I had problems getting this to work when pyenv was checked out into
@@ -304,7 +80,11 @@ export VIRTUALENVWRAPPER_HOOK_DIR="${VIRTUALENVWRAPPER_CONF_DIR}"
 # ~/.pyenv and symlinked to ~/repos/pyenv.
 # In order for this to work, the pyenv-virtualenvwrapper plugin needs to
 # exist in ~/.pyenv/plugins.
-pyenv virtualenvwrapper_lazy
+if [[ -s "${PYENV_ROOT:-$HOME/.pyenv}/bin/pyenv" ]]; then
+    path=("${PYENV_ROOT:-$HOME/.pyenv}/bin" $path)
+    eval "$(pyenv init -)"
+    pyenv virtualenvwrapper_lazy
+fi
 
 # Initialize my chpwd script that will activate a virtualenv when entering
 # a directory that contains a .venv file with the name of a virtualenv inside
@@ -313,35 +93,35 @@ pyenv virtualenvwrapper_lazy
 source "${VIRTUALENVWRAPPER_CONF_DIR}/chpwd.zsh"
 
 # pickup cabal helper aliases if present:
-test -f "$HOME/repos/ghcPkgUtils/ghcPkgUtils.sh" && source "$HOME/repos/ghcPkgUtils/ghcPkgUtils.sh"
-
-alias khreload="rm -rf $HOME/.knowhow/data && knowhow load < $HOME/knowhow.dump"
-alias khd="knowhow dump"
-alias khl="knowhow load < $HOME/knowhow.dump"
-
-# Use pgrep to find the pid of the first arg, and if found, print the
-# environment of the process to stdout using the procfs environ file,
-# which only reflects the environment when the process was started.
-# If called with no args, then print the environment of the current process.
-lsenv() {
-    if [[ -n "$1" ]]; then
-        pid="$(pgrep $1)"
-        if [[ -z "$pid" ]]; then
-            echo "no process found: $1"
-            return 1
-        fi
-    else
-        pid="self"
-    fi
-    cat /proc/$pid/environ | tr '\000' '\n'
-}
+source-if "$HOME/repos/ghcPkgUtils/ghcPkgUtils.sh"
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
     . $HOME/.nix-profile/etc/profile.d/nix.sh;
 fi
 
-function xinput() {
-    echo "disabled"
-    return 1
-}
+export RPROMPT='%(?..%B%F{red}%? ↵%b%{%})'
+
+autoload -Uz compinit promptinit
+compinit -d $HOME/.zcompdump
+promptinit
+prompt eukaryote
+autoload -U colors && colors
+
+# Use emacs mode
+bindkey -e
+
+# Autoload all non-completion functions.
+if [[ -d "${ZDOTDIR}/functions" ]]; then
+    for func in $(ls -1 ${ZDOTDIR}/functions); do
+        if [[ ! "${func}" =~ '_.*' ]]; then
+            autoload -Uz ${func}
+        fi
+    done
+fi
+
+source ${ZDOTDIR}/.aliases
+
+# Initialize zsh-syntax-highlighting if present. This must be last in .zshrc.
+source-if "${REPODIR}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
 ## sublimeconf: filetype=shell

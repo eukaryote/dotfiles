@@ -1,13 +1,11 @@
-#
-# Defines environment variables.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#   eukaryote <sapientdust+github@gmail.com>
-#
+# Execute commands for interactive login and non-login shells as well as
+# scripts. This is sourced first.
 
 # Use custom ZDOTDIR inside my dotfiles git repo
 export ZDOTDIR="${ZDOTDIR:-$HOME/dotfiles/zsh}"
+
+# Directory for custom functions.
+export ZDOTFUNCTIONSDIR="${ZDOTDIR}/functions"
 
 # Directory where I store my custom prompt(s)
 export ZPROMPTDIR="${ZDOTDIR}/prompts"
@@ -22,10 +20,28 @@ fi
 
 [ -z "$TMUX" ] && export TERM=xterm-256color
 
+# Avoid global compinit in /etc/zsh/zshrc so that we can initialize
+# later with a custom location for the dump files.
+skip_global_compinit=1
+
+# Treat these characters as part of a word.
+WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
+# termcap settings for improved `less` display
+export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
+export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
+export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
+export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
+export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
+export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
+export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
+
+export GREP_COLORS='37;45'
+
 # History vars
 export HISTSIZE=10000
 export SAVEHIST=9000
-export HISTFILE=~/.zsh_history
+export HISTFILE=$HOME/.zsh_history
 
 export SAGEROOT=/opt/sage
 
@@ -44,21 +60,17 @@ export PYTHONSTARTUP=~/.pythonrc
 # with virtualenvwrapper.sh and virtualenvwrapper_lazy.sh, since they
 # are intended to be sourced. Thus, I switched to using the
 # pyenv-virtualenv plugin instead of virtualenvwrapper.
-#
 export WORKON_HOME="/v"
 export PROJECT_HOME="$HOME/repos"
+
 export PYENV_VIRTUALENV_BASE="${WORKON_HOME}"
 export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_SKIPPIPCHECK="true"
-# pip should use same dir for venvs as virtualenvwrapper
-# not needed with pyenv
-#export PIP_VIRTUALENV_BASE="${WORKON_HOME}"
-# make pip detect an active virtualenv and install to it without -E parameter
-# not needed with pyenv
-#export PIP_RESPECT_VIRTUALENV="true"
 export VIRTUALENVWRAPPER_VIRTUALENV="pyvenv"
-# export PREZTO_PYTHON_NO_VIRTUALENVWRAPPER="true"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+VIRTUALENVWRAPPER_CONF_DIR="$(readlink -m -n ${ZDOTDIR}/../virtualenvwrapper)"
+# Set path to custom hook scripts for things postactivate events
+export VIRTUALENVWRAPPER_HOOK_DIR="${VIRTUALENVWRAPPER_CONF_DIR}"
 
 # remove env var set by ubuntu
 unset JAVA_TOOL_OPTIONS
@@ -83,11 +95,19 @@ export SSH_AUTH_SOCK
 export GPG_TTY=$(tty)
 
 # add directory for custom functions/completions to fpath
-[[ -d "${ZDOTDIR}/functions" ]] && fpath=("${ZDOTDIR}/functions" $fpath)
+[[ -d "${ZDOTFUNCTIONSDIR}" ]] && fpath=("${ZDOTFUNCTIONSDIR}" $fpath)
+
+# add directory for prompts to fpath
+[[ -d "${ZPROMPTDIR}" ]] && fpath=("${ZPROMPTDIR}" $fpath)
 
 # additional path dirs
-path=($path /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/.local/bin ${HOME}/.gem/ruby/2.1.0/bin)
+for dir in  /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/.local/bin ${HOME}/.gem/ruby/default/bin; do
+    if [[ -d "${dir}" ]]; then
+        path=($path "${dir}")
+    fi
+done
 
 # additional man dirs
-export MANPATH=":${HOME}/.local/share/man"
+[[ -d "${HOME}/.local/share/man" ]] && export MANPATH=":${HOME}/.local/share/man"
+
 ## sublimeconf: filetype=shell

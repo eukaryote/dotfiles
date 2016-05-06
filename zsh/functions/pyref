@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+# use elinks to open the python language reference page for the python
+# version given as the first arg, which defaults to '3' if not given.
+local version="${1:-3}"
+local url="https://docs.python.org/${version}/reference/"
+echo "${url}"
+elinks "${url}"

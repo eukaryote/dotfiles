@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+# compile a single-file c program
+
+local dirpath="$(dirname $1)"
+local filename="$(basename $1)"
+local outname="$(basename ${filename} .c)"
+
+# echo "dirpath: ${dirpath}"
+# echo "filename: ${filename}"
+# echo "outame: ${outname}"
+
+if [[ "${outname}" == "${filename}" ]]; then
+    echo "usage: ccompile FILE.c"
+    return 1
+fi
+cd "${dirpath}"
+gcc -Wall -Wextra -O2 -g -pedantic -std=c11 -o "${outname}" "${filename}"
