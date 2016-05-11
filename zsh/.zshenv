@@ -13,6 +13,10 @@ export ZPROMPTDIR="${ZDOTDIR}/prompts"
 # Directory in which I store git and other repos
 export REPODIR="${REPODIR:-$HOME/repos}"
 
+# Directory containing misellaneous scripts and things
+# to be sourced that don't have a better home
+export SCRIPTDIR="$HOME/scripts"
+
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
@@ -68,9 +72,10 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_SKIPPIPCHECK="true"
 export VIRTUALENVWRAPPER_VIRTUALENV="pyvenv"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-VIRTUALENVWRAPPER_CONF_DIR="$(readlink -m -n ${ZDOTDIR}/../virtualenvwrapper)"
+VIRTUALENVWRAPPER_CONF_DIR="$HOME/.virtualenvs"
+#"$(readlink -m -n ${ZDOTDIR}/../virtualenvwrapper)"
 # Set path to custom hook scripts for things postactivate events
-export VIRTUALENVWRAPPER_HOOK_DIR="${VIRTUALENVWRAPPER_CONF_DIR}"
+export VIRTUALENVWRAPPER_HOOK_DIR="$HOME/.virtualenvs"
 
 # remove env var set by ubuntu
 unset JAVA_TOOL_OPTIONS

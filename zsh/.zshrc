@@ -90,7 +90,7 @@ fi
 # a directory that contains a .venv file with the name of a virtualenv inside
 # (or entering a descendent of such a directory) and deactivate the virtualenv
 # when changing to a directory not inside the virtualenv.
-source "${VIRTUALENVWRAPPER_CONF_DIR}/chpwd.zsh"
+source "${SCRIPTDIR}/chpwd.zsh"
 
 # pickup cabal helper aliases if present:
 source-if "$HOME/repos/ghcPkgUtils/ghcPkgUtils.sh"
