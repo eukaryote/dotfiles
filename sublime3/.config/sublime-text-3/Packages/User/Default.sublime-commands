@@ -1,0 +1,12 @@
+[
+    {
+        "caption": "Set Build System: C++",
+        "command": "set_build_system",
+        "args": { "file":"Packages/C++/C++.sublime-build" }
+    },
+    {
+        "caption": "Set Build System: Python",
+        "command": "set_build_system",
+        "args": { "file":"Packages/Python/Python.sublime-build" }
+    }
+]
