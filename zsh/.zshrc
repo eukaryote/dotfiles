@@ -120,6 +120,7 @@ if [[ -d "${ZDOTDIR}/functions" ]]; then
 fi
 
 source ${ZDOTDIR}/.aliases
+source ${ZDOTDIR}/.aliases-git
 
 # Initialize zsh-syntax-highlighting if present. This must be last in .zshrc.
 source-if "${REPODIR}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
