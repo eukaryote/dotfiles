@@ -1,0 +1,2 @@
+:set -fglasgow-exts
+:def qc \c -> return $ ":m + Test.QuickCheck \nTest.QuickCheck.quickCheck (" ++ c ++ ") \n:m - Test.QuickCheck"
