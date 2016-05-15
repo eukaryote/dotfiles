@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cd $HOME && exec java -jar lantern.jar > /tmp/lantern.out 2>&1 &
