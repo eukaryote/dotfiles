@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo disabled
+exit 1

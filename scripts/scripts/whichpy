@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+
+from importlib import import_module
+import traceback
+
+
+if __name__ == '__main__':
+    import sys
+    modules = sys.argv[1:]
+    if not modules:
+        print("usage: whichpy MODULE+")
+        sys.exit(1)
+    for module in modules:
+        try:
+            print("%s:" % module, import_module(module).__file__)
+        except NameError:
+            print("%s: NOT FOUND" % module)
+        except ImportError:
+            print("%s: ERROR:" % module)
+            traceback.print_exc()
