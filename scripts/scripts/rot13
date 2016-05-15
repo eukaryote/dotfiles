@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+import sys
+
+(A,Z,a,z) = tuple(map(ord, "AZaz"))
+
+def rot13_char(char):
+    """ Convert a single character using rot13. """
+    c = ord(char) 
+    if c >= A and c <= Z:
+        c = A + (((c-A)+13) % 26)
+    elif c >= a and c <= z:
+        c = a + (((c-a)+13) % 26)
+    return chr(c)
+
+def rot13_str(str):
+    """ Convert a string using rot13. """
+    return ''.join(map(rot13_char, str))
+
+def usage():
+    print("""rot13.py FILE
+
+Encrypt FILE using rot13, printing to stdout. 
+If FILE is '-', use stdin as input file.
+
+EXAMPLES
+--------
+
+echo "Hello, World!" | ./rot13.py -
+
+python rot13.py ~/somefile.txt
+
+rot13.py -
+A comment I want to "encrypt" before posting online
+in order to avoid spoiling the surprise...
+^D^D
+""")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2 or sys.argv[1] in ["-h", "--help"]:
+        usage()
+    else:
+        f = sys.stdin
+        if sys.argv[1] != "-":
+            f = open(sys.argv[1], 'rb')
+        for line in f:
+            sys.stdout.write(rot13_str(line))
+        if f != sys.stdin:
+            f.close()
+

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+REMOTEPATH="${1:-''}"
+LOCALPATH="${2:-''}"
+
+if [[ -z "${REMOTEPATH}" || -z "${LOCALPATH}" ]]; then
+    echo "usage: mountgould REMOTEPATH LOCALPATH"
+    exit 1
+fi
+
+exec sshfs -o workaround=rename -o ServerAliveInterval=15 gould:${REMOTEPATH} ${LOCALPATH}
