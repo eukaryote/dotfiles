@@ -1,0 +1,204 @@
+## shell opts
+
+# If set, an argument to the cd builtin command that is not a
+# directory  is  assumed  to  be the name of a variable whose
+# value is the directory to change to.
+shopt -s cdable_vars
+
+# Enable extended pattern matching operators, such as `foo?(.bar).txt',
+# which would match both foo.bar.txt and foo.txt
+shopt -s extglob
+
+## Path to dictionary file for word lookups (wl function), etc.
+export DICT_FILE="/usr/share/dict/words"
+export EDITOR="/usr/bin/vim"
+
+export PATH="$HOME/texlive/2013/bin/x86_64-linux:$HOME/.local/bin:$PATH:/usr/sbin:/sbin"
+
+# virtualenv dir
+#export WORKON_HOME=/v
+#if $(which virtualenvwrapper.sh) 2>&1 > /dev/null
+#then
+#    source $(which virtualenvwrapper.sh) 2>&1 > /dev/null
+#fi
+
+# record all commands immediately to a permanent file with no size limit,
+# in addition to the default bash history that has a fixed size and is
+# only updated when the shell exits cleanly.
+prompt_func() {
+	echo $(date +%Y-%m-%dT%H:%M:%S) $(hostname) $(pwd | sed -r -e "s_/home/[a-zA-Z0-p]+_\~_g") $(history 1) >> ~/.full_history
+}
+
+export PROMPT_COMMAND=prompt_func
+
+## Use colors on colorful terminals
+use_color=false
+safe_term=${TERM//[^[:alnum:]]/?}   # sanitize TERM
+match_lhs=""
+[[ -f ~/.dir_colors   ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
+[[ -f /etc/DIR_COLORS ]] && match_lhs="${match_lhs}$(</etc/DIR_COLORS)"
+[[ -z ${match_lhs}    ]] \
+        && type -P dircolors >/dev/null \
+        && match_lhs=$(dircolors --print-database)
+[[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] && use_color=true
+
+if ${use_color} ; then
+        # Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
+        if type -P dircolors >/dev/null ; then
+                if [[ -f ~/.dir_colors ]] ; then
+                        eval $(dircolors -b ~/.dir_colors)
+                elif [[ -f /etc/DIR_COLORS ]] ; then
+                        eval $(dircolors -b /etc/DIR_COLORS)
+                fi
+        fi
+
+        if [[ ${EUID} == 0 ]] ; then
+                PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
+        else
+                PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+        fi
+
+        alias ls='ls --color=auto'
+        alias grep='grep --colour=auto'
+        alias egrep='egrep --colour=auto'
+        alias fgrep='fgrep --colour=auto'
+else
+        if [[ ${EUID} == 0 ]] ; then
+                # show root@ when we don't have colors
+                PS1='\u@\h \W \$ '
+        else
+                PS1='\u@\h \w \$ '
+        fi
+fi
+unset use_color safe_term match_lhs
+
+## color/formatting aliases for shell output coloring
+
+# Turns on reverse background effect, where background is a solid block
+REV_ON="$(test -n "$TERM" && tput smso)"
+# Turns off STAND_OUT effect.
+REV_OFF="$(test -n "$TERM" && tput rmso)"
+BOLD='\033[1m'
+red='033[0;31m'
+RED='\033[1;31m'
+blue='\033[0;34m'
+BLUE='\033[1;34m'
+cyan='\033[0;36m'
+CYAN='\033[1;36m'
+green='\e[1;32m'
+# Return to normal color format.
+NCOL='\033[0m'
+
+## Show disk usage with human friendly sizes in sorted order.
+## From:
+##   http://www.earthinfo.org/linux-disk-usage-sorted-by-size-and-human-readable/
+function duf {
+  du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=$((size/1024)); done; done
+}
+
+alias elinks="TERM=xterm-256color; elinks"
+
+alias env="\env | \sort | grep -P '^[A-Z_]+'"
+alias envg="\env | \sort | grep "
+alias envgi="\env | \sort | grep -i"
+
+export CO=always
+# perl regex syntax
+function gp()    { \grep --color=$CO -P $*; }
+# ... with line numbers
+function gpn()   { \grep --color=$CO -Pn $*; }
+# ... case-insensitive
+function gpi()   { \grep --color=$CO -iP $*; }
+# ... with line numbers and case-insensitive
+function gpni()  { \grep --color=$CO -iPn $*; }
+
+alias h="history | gpi"
+
+alias lstr="ls -ltr"
+
+alias mplayer="mplayer -af scaletempo"
+
+alias pro="ssh protempore.net"
+
+alias redol="!! | less"
+alias sb="source ~/.bashrc"
+
+# show proc/mem usage info
+alias usage="top -b -n 1 | head -n 5 | tail -n 3"
+
+alias ytdl="youtube-dl -t -c"
+
+# Takes a delimiter as arg 1 and a string as arg 2, and echoes to stdout 
+# a tokenized version of the string, with each token on a separate line.
+# For example, tokenize " " "1 2 3" would output each number on a separate
+# line.
+tokenize() {
+    if [ $# -ne 2 ]; then
+        erro "Usage: tokenize delim str"
+        return 1
+    fi
+    for token in ${2%%$1}; do
+        echo "$token"
+    done
+}
+
+# Find files in current directory or a subdirectory (recursively) that 
+# have a name containing the 1st arg as a substring. E.g., executing
+# ff bar would find files with names like bar, foo_bar, bar.txt, etc..
+ff() { 
+    find . -name "*$1*"
+}
+
+# Find files in current directory or a subdirectory (recursively) that
+# match as in ff and then execute the 2nd arg on each file. E.g.,
+# executing fe bar md5sum would print the md5 digest of all files that
+# match the first argument.
+fe() {
+    find . -name "*$1*" -exec $2 {} \;
+}
+
+# Find a regular expression given as the 1st arg in files 
+# matching any arg after the 1st (matching like the ff function), or
+# in any file in the current directory or its subdirectories if no 2nd arg is 
+# given, and print each line containing the pattern, highlighting the 
+# matched part of each line found.
+fstr() {
+  if [ "$#" -lt 2 ]; then
+    echo 'Usage: fstr "pattern" [filenames]'
+    return 1;
+  fi
+  if [ -n "$2" ]; then
+    name="*$2*"
+  else
+    name="*"
+  fi
+  find . -type f -name "$name" -print | \
+      xargs egrep -Esin "$1" | \
+      sed -r "s/($1)/${REV_ON}\1${REV_OFF}/gI"
+}
+
+function psg() {
+  ps -ef | gpi $@ | grep -v grep | more;
+}
+
+function psG() {
+  ps -ef | gp $@ | grep -v grep | more;
+}
+
+function hostinfo() {
+  ip=$(this_ip)
+  echo -e "\nLogged in to ${RED}$HOSTNAME${NCOL} (${ip:-\"Not connected\"})"
+  echo -e "\n${RED}Additional information:${NCOL} " ; uname -a
+  echo -e "\n${RED}Users logged on:${NCOL} " ; w -h
+  echo -e "\n${RED}Current date:${NCOL} " ; date
+  echo -e "\n${RED}Machine stats:${NCOL} " ; uptime
+  echo -e "\n${RED}Memory stats:${NCOL} " ; free
+} 
+
+# Get the pids of processes that have $1 as part of the command by performing
+# grep on the command and returning the pids of all processes that have
+# a command that is matched by the pattern given as $1 (basix regex syntax).
+getpid() {
+    echo "$(ps -eo pid,command | grep $1 | grep -v grep | egrep -o '^ *[0-9]+')" 2> /dev/null
+}
+
