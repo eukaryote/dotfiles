@@ -106,7 +106,7 @@ export GPG_TTY=$(tty)
 [[ -d "${ZPROMPTDIR}" ]] && fpath=("${ZPROMPTDIR}" $fpath)
 
 # additional path dirs
-for dir in  /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/.local/bin ${HOME}/.gem/ruby/default/bin /opt/bitkeeper; do
+for dir in  /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/scripts ${HOME}/.local/bin ${HOME}/.gem/ruby/default/bin /opt/bitkeeper; do
     if [[ -d "${dir}" ]]; then
         path=($path "${dir}")
     fi
