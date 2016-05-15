@@ -1,0 +1,14 @@
+egtb
+hash=192M
+hashp=64M
+cache=32M
+ponder on
+swindle on
+timebook 80 8
+learn 7
+book on
+show book
+kibitz 1
+mt=2
+exit
+
