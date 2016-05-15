@@ -1,3 +1,5 @@
 {
-    "pydocstyle": false
+    "pydocstyle": false,
+    "python_interpreter": "/opt/python/3.5.1/bin/python",
+    "executable": "/opt/python/3.5.1/bin/pyflakes"
 }
