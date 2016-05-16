@@ -51,4 +51,8 @@ if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
 
+if which conky >/dev/null 2>&1 && ! ps -ef | grep '[c]onky' > /dev/null 2>&1 ; then
+    cd $HOME
+    nohup conky > /tmp/conky.out 2>&1 &|
+fi
 ## sublimeconf: filetype=shell
