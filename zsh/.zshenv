@@ -90,10 +90,11 @@ path=($path /usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin)
 export RUST_SRC_PATH=/usr/local/src/rust/src
 
 # run gpg-agent if not running, or source env file if already running
-if test -f $XDG_RUNTIME_DIR/gpg-agent-info && kill -0 $(head -n 1 $XDG_RUNTIME_DIR/gpg-agent-info | cut -d: -f2) 2>/dev/null ; then
-    eval $(< $XDG_RUNTIME_DIR/gpg-agent-info)
+GPG_AGENT_DIR="${HOME}/.gnupg"
+if test -f ${GPG_AGENT_DIR}/gpg-agent-info && kill -0 $(head -n 1 ${GPG_AGENT_DIR}/gpg-agent-info | cut -d: -f2) 2>/dev/null ; then
+    eval $(< ${GPG_AGENT_DIR}/gpg-agent-info)
 else
-    eval $(gpg-agent --daemon --enable-ssh-support --write-env-file $XDG_RUNTIME_DIR/gpg-agent-info)
+    eval $(gpg-agent --daemon --enable-ssh-support --write-env-file ${GPG_AGENT_DIR}/gpg-agent-info)
 fi
 export GPG_AGENT_INFO
 export SSH_AUTH_SOCK
