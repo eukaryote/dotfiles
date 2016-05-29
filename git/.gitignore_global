@@ -2,3 +2,5 @@
 *.pyo
 __pycache__
 .cache
+.venv
+.python-version
