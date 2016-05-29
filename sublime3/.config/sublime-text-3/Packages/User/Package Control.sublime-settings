@@ -6,7 +6,6 @@
 	"installed_packages":
 	[
 		"Ansible",
-		"AnsibleSnippets",
 		"ApplySyntax",
 		"Babel",
 		"Babel Snippets",
@@ -37,6 +36,7 @@
 		"SublimeLinter",
 		"SublimeLinter-flake8",
 		"SublimeLinter-pyflakes",
+		"SublimeLinter-pyyaml",
 		"SublimeREPL",
 		"Theme - Soda",
 		"Theme - Spacefunk",
