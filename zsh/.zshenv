@@ -84,7 +84,7 @@ unset GPG_AGENT_INFO
 # golang conf
 [[ ! -d ~/go ]] && mkdir ~/go
 export GOPATH=~/go
-path=($path /usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin)
+path=(/usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin $HOME/.cabal/bin $path)
 
 # rust conf
 export RUST_SRC_PATH=/usr/local/src/rust/src
