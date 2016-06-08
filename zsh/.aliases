@@ -22,6 +22,8 @@ alias scp='noglob scp'
 alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias type='type -a'
 
+alias c='curly'
+
 alias ls='ls --group-directories-first'
 if [[ -s "$HOME/.dir_colors" ]]; then
     eval "$(dircolors --sh "$HOME/.dir_colors")"

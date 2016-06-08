@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Invoke curl with all args passed through to curl,
+# using progress bar if stdout is TTY and using
+# silent mode (but still showing errors) if stdout
+# is piped or redirected.
+
+# stdout to TTY
+[[ -t 1 ]] && {
+    #echo "TTY"
+    exec curl -# "$@"
+}
+
+# stdout to pipe
+[[ -p /dev/stdout ]] && {
+    #echo "pipe"
+    exec curl -sS "$@"
+}
+
+# stdout redirected
+[[ ! -t 1 && ! -p /dev/stdout ]] && {
+    #echo "redirection"
+    exec curl -sS "$@";
+}
