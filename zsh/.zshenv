@@ -79,7 +79,7 @@ export VIRTUALENVWRAPPER_HOOK_DIR="$HOME/.virtualenvs"
 
 # remove env var set by ubuntu
 unset JAVA_TOOL_OPTIONS
-unset GPG_AGENT_INFO
+#unset GPG_AGENT_INFO
 
 # golang conf
 [[ ! -d ~/go ]] && mkdir ~/go
@@ -89,15 +89,7 @@ path=(/usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin $HOME/.cabal/bin $pa
 # rust conf
 export RUST_SRC_PATH=/usr/local/src/rust/src
 
-# run gpg-agent if not running, or source env file if already running
-GPG_AGENT_DIR="${HOME}/.gnupg"
-if test -f ${GPG_AGENT_DIR}/gpg-agent-info && kill -0 $(head -n 1 ${GPG_AGENT_DIR}/gpg-agent-info | cut -d: -f2) 2>/dev/null ; then
-    eval $(< ${GPG_AGENT_DIR}/gpg-agent-info)
-else
-    eval $(gpg-agent --daemon --enable-ssh-support --write-env-file ${GPG_AGENT_DIR}/gpg-agent-info)
-fi
-export GPG_AGENT_INFO
-export SSH_AUTH_SOCK
+# gpg-agent autostarts since 2.1; write-env-file is no longer needed or supported
 export GPG_TTY=$(tty)
 
 # add directory for custom functions/completions to fpath
