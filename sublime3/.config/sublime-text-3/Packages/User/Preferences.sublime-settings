@@ -4,7 +4,7 @@
 	[
 		"node_modules/**"
 	],
-	"color_scheme": "Packages/User/SublimeLinter/Chromodynamics (Flake8Lint) (SL).tmTheme",
+	"color_scheme": "Packages/User/SublimeLinter/Monokai JSON+ (Flake8Lint) (SL).tmTheme",
 	"detect_indentation": true,
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Liberation Mono",
