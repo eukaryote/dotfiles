@@ -92,11 +92,21 @@ export RUST_SRC_PATH=/usr/local/src/rust/src
 # gpg-agent autostarts since 2.1; write-env-file is no longer needed or supported
 export GPG_TTY=$(tty)
 
-# add directory for custom functions/completions to fpath
-[[ -d "${ZDOTFUNCTIONSDIR}" ]] && fpath=("${ZDOTFUNCTIONSDIR}" $fpath)
+# helper to add an fpath entry if it's a dir and not already in fpath
+addfpath() {
+    # don't need to check if it's in the array already, because fpath
+    # is declared with '-U' so won't add it if already present
+    [[ -d "$1" ]] && fpath=("$1" ${fpath})
+}
+
+# add standard zsh completions to fpath
+addfpath "/usr/share/zsh/vendor-completions"
+
+# add custom functions/completions to fpath
+addfpath "${ZDOTFUNCTIONSDIR}"
 
 # add directory for prompts to fpath
-[[ -d "${ZPROMPTDIR}" ]] && fpath=("${ZPROMPTDIR}" $fpath)
+addfpath "${ZPROMPTDIR}"
 
 test -f "${HOME}/.zshenv-custom" && source "${HOME}/.zshenv-custom"
 
