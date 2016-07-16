@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# bring down and delete bridge args
+
+set -eu
+
+brdown ()
+{
+    for link in "$@"
+    do
+        ip link set "$link" down
+        brctl delbr "$link"
+    done
+}
