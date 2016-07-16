@@ -52,7 +52,7 @@ export SAGEROOT=/opt/sage
 # Editors
 export EDITOR=/usr/bin/vim
 export SUDO_EDITOR=${EDITOR}
-export VISUAL=/usr/bin/subl
+export VISUAL=${EDITOR}
 
 ## Python environment vars
 
