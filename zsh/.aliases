@@ -101,6 +101,9 @@ alias reload!="exec zsh"
 # undo the annoying aliasing of rm as 'rm -i' that prezto sets up
 alias rm="nocorrect rm"
 
+# ensure TERM set correctly so we can get 24-bit colors in tmux 2.2+
+alias tmux="env TERM=xterm-256color tmux"
+
 alias khreload="rm -rf $HOME/.knowhow/data && knowhow load < $HOME/knowhow.dump"
 alias khd="knowhow dump"
 alias khl="knowhow load < $HOME/knowhow.dump"
