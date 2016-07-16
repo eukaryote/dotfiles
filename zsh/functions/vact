@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# Activate venv corresponding to current working directory
+# by looking for a venv with the same name in the first of
+# VENVS or WORKON_HOME that is defined.
+# Uses the first activation script found of
+# 'activate_all' and 'activate'.
+
+# no -eu because activate scripts do not work with '-u' set
+# and tmux is affected somehow when '-e' is set
+
+DIRNAME="$(basename "$(pwd)")"
+VENV="${VENVS:-${WORKON_HOME:-/v}}/${DIRNAME}"
+
+ACTIVATE_ALL="${VENV}/bin/activate_all"
+ACTIVATE="${VENV}/bin/activate"
+
+# not working
+deactivate() {
+    if [ -n "${VIRTUAL_ENV:-''}" ] ; then
+        if type deactivate >/dev/null 2>&1 ; then
+            deactivate
+        fi
+    fi
+}
+
+activate() {
+    if [ ! -d "${VENV}" ] ; then
+        echo "no venv dir found at ${VENV}"
+        return 1
+    fi
+
+    if [ -f "${ACTIVATE_ALL}" ] ; then
+        . "${ACTIVATE_ALL}"
+        return 0
+    else
+        if [ -f "${ACTIVATE}" ] ; then
+            . "${ACTIVATE}"
+            return 0
+        fi
+    fi
+
+    echo "no activate_all or activate scripts found in ${VENV}/bin"
+    return 1
+}
+
+activate
