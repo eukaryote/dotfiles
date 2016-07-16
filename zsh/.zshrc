@@ -119,7 +119,7 @@ if [[ -d "${ZDOTDIR}/functions" ]]; then
     done
 fi
 
-source ${ZDOTDIR}/.aliases
+source ${ZDOTDIR}/.aliases.zsh
 source ${ZDOTDIR}/.aliases-git
 
 # Initialize zsh-syntax-highlighting if present. This must be last in .zshrc.
