@@ -98,14 +98,17 @@ export GPG_TTY=$(tty)
 # add directory for prompts to fpath
 [[ -d "${ZPROMPTDIR}" ]] && fpath=("${ZPROMPTDIR}" $fpath)
 
+test -f "${HOME}/.zshenv-custom" && source "${HOME}/.zshenv-custom"
+
 # additional path dirs
 for dir in  /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/scripts ${HOME}/.local/bin ${HOME}/.gem/ruby/default/bin /opt/bitkeeper; do
     if [[ -d "${dir}" ]]; then
-        path=($path "${dir}")
+        path=("${dir}" $path)
     fi
 done
 
 # additional man dirs
 [[ -d "${HOME}/.local/share/man" ]] && export MANPATH=":${HOME}/.local/share/man"
+[[ -d "${HOME}/share/man" ]] && export MANPATH="${HOME}/share/man:$MANPATH"
 
 ## sublimeconf: filetype=shell
