@@ -37,6 +37,10 @@
 
 [merge]
 	conflictStyle = diff3
+	tool = meld
+
+[rerere]
+	enabled = true
 
 [log]
 	follow = true
