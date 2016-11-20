@@ -84,7 +84,7 @@ unset JAVA_TOOL_OPTIONS
 # golang conf
 [[ ! -d ~/go ]] && mkdir ~/go
 export GOPATH=~/go
-path=(/usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin $HOME/.cabal/bin $path)
+path=(/usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin $HOME/.cabal/bin $HOME/.cargo/bin $path)
 
 # rust conf
 export RUST_SRC_PATH=/usr/local/src/rust/src
