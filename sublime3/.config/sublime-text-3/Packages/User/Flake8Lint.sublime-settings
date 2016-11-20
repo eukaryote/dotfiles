@@ -1,5 +1,7 @@
 {
     "pydocstyle": false,
-    "python_interpreter": "/opt/python/3.5.1/bin/python",
-    "executable": "/opt/python/3.5.1/bin/pyflakes"
+    "python_interpreter": "/opt/python/3.5.2/bin/python",
+    "executable": "/opt/python/3.5.2/bin/pyflakes",
+    "import-order-style": "cryptography",
+    "ignore_files": ["*.pyi"]
 }

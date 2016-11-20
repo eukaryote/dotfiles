@@ -8,19 +8,18 @@
 	"detect_indentation": true,
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Liberation Mono",
-	"font_size": 10,
+	"font_size": 11,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
+		"Anaconda",
 		"JavaScript",
 		"Meteor Autocomplete (TernJS)",
 		"Meteor Snippets",
 		"orgmode",
-		"Python",
 		"Python Checker",
 		"RestructuredText",
-		"SublimeLinter-flake8",
-		"SublimeLinter-pyflakes",
+		"SublimeCodeIntel",
 		"Vintage"
 	],
 	"match_brackets": false,

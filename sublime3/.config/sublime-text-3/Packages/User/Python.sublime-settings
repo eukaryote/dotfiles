@@ -1,8 +1,9 @@
 {
 	"extensions":
 	[
-		"py3",
+		"sage",
 		"pyw",
-		"sage"
+		"pyi",
+		"py3"
 	]
 }
