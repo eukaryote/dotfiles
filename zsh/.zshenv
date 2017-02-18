@@ -117,7 +117,7 @@ addfpath "${ZPROMPTDIR}"
 test -f "${HOME}/.zshenv-custom" && source "${HOME}/.zshenv-custom"
 
 # additional path dirs
-for dir in  /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/scripts ${HOME}/.local/bin ${HOME}/.gem/ruby/default/bin /opt/bitkeeper; do
+for dir in  /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/scripts ${HOME}/.local/bin ${HOME}/.gem/ruby/default/bin; do
     if [[ -d "${dir}" ]]; then
         path=("${dir}" $path)
     fi
