@@ -8,7 +8,8 @@ _git_log_brief_format='%C(green)%h%C(reset) %s%n%C(blue)(%ar by %an)%C(red)%d%C(
 
 alias g='git'
 
-alias gH='less ${ZDOTDIR}/.aliases-git'
+# view git aliases defined in this file
+alias galiases='less ${ZDOTDIR}/.aliases-git'
 
 # leverage aliases from ~/.gitconfig
 alias gh='git hist'
