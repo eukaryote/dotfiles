@@ -1,4 +1,5 @@
 {
+	"auto_upgrade": false,
 	"bootstrapped": true,
 	"in_process_packages":
 	[
@@ -45,6 +46,7 @@
 		"SublimeLinter-flake8",
 		"SublimeLinter-json",
 		"SublimeLinter-pyflakes",
+		"SublimeLinter-pylint",
 		"SublimeLinter-pyyaml",
 		"SublimeLinter-shellcheck",
 		"SublimeREPL",

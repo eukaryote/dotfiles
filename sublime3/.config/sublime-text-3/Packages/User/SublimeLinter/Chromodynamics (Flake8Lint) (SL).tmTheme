@@ -88,7 +88,7 @@
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#545458</string>
+                <string>#747475</string>
             </dict>
         </dict>
         <dict>
@@ -122,6 +122,17 @@
             <dict>
                 <key>foreground</key>
                 <string>#7c9f57</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>name</key>
+            <string>Docstring Storage (r prefix) (specially for Atom)</string>
+            <key>scope</key>
+            <string>string.quoted.docstring storage</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#66D9EF</string>
             </dict>
         </dict>
         <dict>
@@ -490,16 +501,6 @@
         </dict>
     <dict>
             <key>name</key>
-            <string>Python Flake8 Lint Gutter Mark</string>
-            <key>scope</key>
-            <string>flake8lint.mark.gutter</string>
-            <key>settings</key>
-            <dict>
-                <key>foreground</key>
-                <string>#FFFFFF</string>
-            </dict>
-        </dict><dict>
-            <key>name</key>
             <string>Python Flake8 Lint Error</string>
             <key>scope</key>
             <string>flake8lint.mark.error</string>
@@ -510,13 +511,13 @@
             </dict>
         </dict><dict>
             <key>name</key>
-            <string>Python Flake8 Lint Critical</string>
+            <string>Python Flake8 Lint Gutter Mark</string>
             <key>scope</key>
-            <string>flake8lint.mark.critical</string>
+            <string>flake8lint.mark.gutter</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#981600</string>
+                <string>#FFFFFF</string>
             </dict>
         </dict><dict>
             <key>name</key>
@@ -530,6 +531,16 @@
             </dict>
         </dict><dict>
             <key>name</key>
+            <string>Python Flake8 Lint Critical</string>
+            <key>scope</key>
+            <string>flake8lint.mark.critical</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#981600</string>
+            </dict>
+        </dict><dict>
+            <key>name</key>
             <string>SublimeLinter Error</string>
             <key>scope</key>
             <string>sublimelinter.mark.error</string>
@@ -540,16 +551,6 @@
             </dict>
         </dict><dict>
             <key>name</key>
-            <string>SublimeLinter Gutter Mark</string>
-            <key>scope</key>
-            <string>sublimelinter.gutter-mark</string>
-            <key>settings</key>
-            <dict>
-                <key>foreground</key>
-                <string>#FFFFFF</string>
-            </dict>
-        </dict><dict>
-            <key>name</key>
             <string>SublimeLinter Warning</string>
             <key>scope</key>
             <string>sublimelinter.mark.warning</string>
@@ -557,6 +558,16 @@
             <dict>
                 <key>foreground</key>
                 <string>#DDB700</string>
+            </dict>
+        </dict><dict>
+            <key>name</key>
+            <string>SublimeLinter Gutter Mark</string>
+            <key>scope</key>
+            <string>sublimelinter.gutter-mark</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#FFFFFF</string>
             </dict>
         </dict></array>
     <key>uuid</key>
