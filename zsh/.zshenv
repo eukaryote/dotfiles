@@ -86,6 +86,12 @@ unset JAVA_TOOL_OPTIONS
 export GOPATH=~/go
 path=(/usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin $HOME/.cabal/bin $HOME/.cargo/bin $path)
 
+# Log TLS keys to file for wireshark debugging
+export SSLKEYLOGFILE="${HOME}/.ssl/sslkeylogfile.txt"
+[[ -f "${SSLKEYLOGFILE}" ]] || ( mkdir -m 02700 -p "$(dirname "${SSLKEYLOGFILE}")" && umask 077 && touch "${SSLKEYLOGFILE}" )
+# Only enable as needed by commenting out the next line:
+unset SSLKEYLOGFILE
+
 # rust conf
 export RUST_SRC_PATH=/usr/local/src/rust/src
 
