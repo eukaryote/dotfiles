@@ -43,6 +43,9 @@ alias lc='lt -c'         # Lists sorted by date, most recent last, shows change 
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias grep="${aliases[grep]:-grep} --color=auto"
 
+alias clipc='xclip -selection clipboard'
+alias clipp='xclip -selection clipboard -o'
+
 alias df='df -kh'
 alias du='du -kh'
 ddu () {
@@ -90,6 +93,9 @@ alias lstra='ls -ltrA'
 alias manh='man --html'
 
 psg() { ps -ef | grep "$@" | grep -v grep | more; }
+
+alias lua='lua5.3'
+alias luac='luac5.3'
 
 # redo last command but pipe it to less
 alias redol="!! | less"
