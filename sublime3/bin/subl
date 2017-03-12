@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# add bin of each python version we develop (workaround
+# for sublimelinter bugs related to not being able to find 
+# scripts like 'pylint' unless available on global PATH)
+export PATH="/opt/python/3.4.2/bin:/opt/python/3.5.2/bin:/opt/python/3.6.0/bin:/opt/python/2.7.13/bin:$PATH"
+unset PYTHONPATH
+
+exec /opt/sublime_text/sublime_text "$@"
