@@ -44,9 +44,8 @@ set showmatch      " highlight matching [{()}]
 
 set foldlevelstart=20 " start with folds open (level 20)
 
-"set termguicolors
-set background=dark
-colorscheme candy
+set background=dark  " dark background
+colorscheme candy    " candy colorscheme (custom downloaded into .vim/colors)
 
 " h and l keystrokes should wrap over lines, and ~ (convert case) should
 " wrap over lines, and the cursor keys should wrap when in insert mode.
