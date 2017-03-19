@@ -42,6 +42,8 @@ set wildmenu       " enable visual autocomplete for command menu
 set lazyredraw     " only redraw when necessary
 set showmatch      " highlight matching [{()}]
 
+set foldlevelstart=20 " start with folds open (level 20)
+
 "set termguicolors
 set background=dark
 colorscheme candy
