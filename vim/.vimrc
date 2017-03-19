@@ -1,6 +1,8 @@
 " vim: nowrap fdm=marker
 scriptencoding utf-8
 
+execute pathogen#infect()
+
 " {{{ options
 set nocompatible   " don't use vi-compatible mode (even when launched with'vi')
 
@@ -19,6 +21,7 @@ set expandtab      " expand all tab values to spaces
 set autoindent     " automatically indent new lines
 set formatoptions=l " don't break long lines in insert mode
 set nowrap          " don't wrap lines for display
+set nojoinspaces   " one space (instead of two) after '.?!' when joining lines
 
 set ignorecase     " case-insensitive search
 set smartcase      " unless containing uppercase letters
@@ -39,13 +42,15 @@ set wildmenu       " enable visual autocomplete for command menu
 set lazyredraw     " only redraw when necessary
 set showmatch      " highlight matching [{()}]
 
+"set termguicolors
+set background=dark
+colorscheme candy
+
 " h and l keystrokes should wrap over lines, and ~ (convert case) should
 " wrap over lines, and the cursor keys should wrap when in insert mode.
 set whichwrap=h,l,~,[,]
 
-" allow <BkSpc> to delete line breaks, beyond start of current
-" insertion, and over indentations:
-set backspace=eol,start,indent
+set backspace=eol,start,indent  " backspace over all
 
 " characters to show for expanded TABs, trailing whitespace, and end-of-lines:
 set listchars=tab:>-,trail:·,eol:$
