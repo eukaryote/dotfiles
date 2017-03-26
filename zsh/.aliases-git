@@ -173,3 +173,9 @@ alias gwc='git clean -n'
 alias gwC='git clean -f'
 alias gwx='git rm -r'
 alias gwX='git rm -rf'
+
+# Tags (t)
+alias gtl='git tag -l'
+alias gta='git tag -a'
+alias gts='git tag -s'
+alias gtv='git tag -v'
