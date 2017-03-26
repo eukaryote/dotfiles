@@ -23,7 +23,10 @@
 		"RestructuredText",
 		"SublimeCodeIntel",
 		"SublimeLinter-flake8",
+		"SublimeLinter-json",
 		"SublimeLinter-pyflakes",
+		"SublimeLinter-pyyaml",
+		"SublimeLinter-shellcheck",
 		"Vintage"
 	],
 	"match_brackets": false,
