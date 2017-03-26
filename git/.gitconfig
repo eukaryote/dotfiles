@@ -15,6 +15,9 @@
 [push]
 	default = simple
 
+[p4]
+	preserve-user = true
+
 [alias]
 	root = rev-parse --show-toplevel
 	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
