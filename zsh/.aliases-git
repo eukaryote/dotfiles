@@ -13,7 +13,6 @@ alias galiases='less ${ZDOTDIR}/.aliases-git'
 
 # leverage aliases from ~/.gitconfig
 alias gh='git hist'
-alias gt='git today'
 
 # gsh shows the number of commits for the current repos for all developers
 alias gsh="git shortlog | grep -E '^[ ]+\w+' | wc -l"
@@ -175,6 +174,7 @@ alias gwx='git rm -r'
 alias gwX='git rm -rf'
 
 # Tags (t)
+alias gt='git tag'
 alias gtl='git tag -l'
 alias gta='git tag -a'
 alias gts='git tag -s'
