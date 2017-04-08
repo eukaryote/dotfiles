@@ -35,7 +35,7 @@ set encoding=utf-8 " set default encoding to UTF-8
 set showbreak=+    " show a '+' if a line is longer than screen
 set laststatus=2   " always show status line in last window
 
-set number         " show line numbers
+"set number         " show line numbers
 set showcmd        " show last command entered at bottom right
 set cursorline     " highlight current line
 set wildmenu       " enable visual autocomplete for command menu
