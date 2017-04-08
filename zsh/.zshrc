@@ -125,4 +125,8 @@ source ${ZDOTDIR}/.aliases-git
 # Initialize zsh-syntax-highlighting if present. This must be last in .zshrc.
 source-if "${REPODIR}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
+if [[ -n "${commands[kubectl]}" ]]; then
+   source <(${commands[kubectl]} completion zsh)
+fi
+
 ## sublimeconf: filetype=shell
