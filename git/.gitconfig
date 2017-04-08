@@ -47,3 +47,10 @@
 
 [log]
 	follow = true
+	decorate = full
+[rebase]
+	autostash = true
+[pull]
+	ff = only
+[stash]
+	showPatch = true
