@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# A script that pretty-prints JSON using 'jq'.
+# The parameter may be '-' to read from standard
+# input, or a path to a file, which will be
+# replaced with a file containing the
+# pretty-printed output.
+
+_usage() {
+    >&2 echo 'usage: jsonf (-|FILEPATH)'
+}
+
+_jsonf() {
+    local f="${1:-}"
+    test -n "${f}" || {
+        _usage
+        return 1
+    }
+    which jq >/dev/null 2>&1 || {
+        >&2 echo 'jq not found on PATH'
+        return 1
+    }
+    if [ "${f}" = "-" ]
+    then
+        jq '.'
+        return $?
+    else
+        test -f "${f}" || {
+            _usage
+            return 1
+        }
+        jq '.' < "${f}" > "${f}.$$.tmp" || return $?
+        mv -f -- "${f}.$$.tmp" "${f}" || return $?
+    fi
+}
+
+_jsonf "$@"
