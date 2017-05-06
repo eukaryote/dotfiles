@@ -129,4 +129,9 @@ if [[ -n "${commands[kubectl]}" ]]; then
    source <(${commands[kubectl]} completion zsh)
 fi
 
+if which tmuxp >/dev/null 2>&1 ; then
+    eval "$(_TMUXP_COMPLETE=source tmuxp)"
+fi
+
+
 ## sublimeconf: filetype=shell
