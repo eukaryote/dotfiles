@@ -128,6 +128,7 @@ done
 
 # additional man dirs
 [[ -d "${HOME}/.local/share/man" ]] && export MANPATH=":${HOME}/.local/share/man"
-[[ -d "${HOME}/share/man" ]] && export MANPATH="${HOME}/share/man:$MANPATH"
+[[ -d "${HOME}/share/man" ]] && export MANPATH="${HOME}/share/man:${MANPATH}"
+[[ -d "/opt/zsh/default/share/man" ]] && export MANPATH="/opt/zsh/default/share/man:${MANPATH}"
 
 ## sublimeconf: filetype=shell

@@ -66,7 +66,7 @@ function xinput() {
     return 1
 }
 
-function source-if {
+function source-if-exists {
     for p in "$@"; do
         if [[ -f "$p" ]]; then
             source "$p"
@@ -90,10 +90,10 @@ fi
 # a directory that contains a .venv file with the name of a virtualenv inside
 # (or entering a descendent of such a directory) and deactivate the virtualenv
 # when changing to a directory not inside the virtualenv.
-source "${SCRIPTDIR}/chpwd.zsh"
+source-if-exists "${SCRIPTDIR}/chpwd.zsh"
 
 # pickup cabal helper aliases if present:
-source-if "$HOME/repos/ghcPkgUtils/ghcPkgUtils.sh"
+source-if-exists "$HOME/repos/ghcPkgUtils/ghcPkgUtils.sh"
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
     . $HOME/.nix-profile/etc/profile.d/nix.sh;
@@ -123,7 +123,7 @@ source ${ZDOTDIR}/.aliases.zsh
 source ${ZDOTDIR}/.aliases-git
 
 # Initialize zsh-syntax-highlighting if present. This must be last in .zshrc.
-source-if "${REPODIR}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source-if-exists "${REPODIR}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 if [[ -n "${commands[kubectl]}" ]]; then
    source <(${commands[kubectl]} completion zsh)
