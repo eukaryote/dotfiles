@@ -37,7 +37,8 @@
 [diff]
 	algorithm = patience
 	submodule = log
-
+[difftool]
+	prompt = false
 [merge]
 	conflictStyle = diff3
 	tool = meld
