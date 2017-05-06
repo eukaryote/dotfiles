@@ -45,6 +45,7 @@
 
 [rerere]
 	enabled = true
+	autoUpdate = true
 
 [log]
 	follow = true
@@ -55,3 +56,5 @@
 	ff = only
 [stash]
 	showPatch = true
+[gc]
+	rerereResolved = 180
