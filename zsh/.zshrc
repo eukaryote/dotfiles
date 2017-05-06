@@ -60,6 +60,13 @@ zstyle ':completion:*:descriptions' format '%B%d%b'
 zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name
+# ignore completion function for functions we don't have:
+zstyle ':completion:*:functions' ignored-patterns '_*'
+# use cache, which helps with some functions that are very slow:
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh_cache
+# remove trailing slash when using directory as an argument:
+zstyle ':completion:*' squeeze-slashes true
 
 function xinput() {
     echo "disabled"
