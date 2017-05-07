@@ -117,6 +117,11 @@ autoload -U colors && colors
 # Use emacs mode
 bindkey -e
 
+# "escape #": toggle '#' at beginning of line
+bindkey '\e#' vi-pound-insert
+
+bindkey '^q' push-line-or-edit
+
 # Autoload all non-completion functions.
 if [[ -d "${ZDOTDIR}/functions" ]]; then
     for func in $(ls -1 ${ZDOTDIR}/functions); do
