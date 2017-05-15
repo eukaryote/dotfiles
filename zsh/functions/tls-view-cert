@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Print (first) TLS cert of host to stdout.
+
+set -o pipefail
+
+
+main() {
+    local -r hostname=${1:-}
+    local -r port=${2:-443}
+
+    if [[ -z "${hostname}" || -n "${3:-}" || ! "${port}" =~ ^[0-9]+$ ]]
+    then
+        >&2 echo "usage: tls-view-cert HOSTNAME [PORT]"
+        return 1
+    fi
+    echo | openssl s_client -showcerts -servername "${hostname}" -connect "${hostname}:${port}" 2>/dev/null |
+       openssl x509 -inform pem -noout -text
+}
+
+main "$@"
