@@ -87,7 +87,19 @@ unset JAVA_TOOL_OPTIONS
 # golang conf
 [[ ! -d ~/go ]] && mkdir ~/go
 export GOPATH=~/go
-path=(/usr/local/go/bin ${GOPATH}/bin /opt/node/default/bin $HOME/.cabal/bin $HOME/.cargo/bin $path)
+path=(
+    /opt/git/default/bin
+    /opt/curl/default/bin
+    /opt/nghttp2/default/bin
+    /opt/terraform/default
+    /opt/packer/default
+    /usr/local/go/bin
+    ${GOPATH}/bin
+    /opt/node/default/bin
+    $HOME/.cabal/bin
+    $HOME/.cargo/bin
+    $path
+)
 
 # Log TLS keys to file for wireshark debugging
 export SSLKEYLOGFILE="${HOME}/.ssl/sslkeylogfile.txt"
