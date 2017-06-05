@@ -20,8 +20,23 @@ DOTFILES="$(cd $(dirname ${BASH_SOURCE:-$0}) && pwd)"
 STOW_TARGET="${STOW_TARGET:-${HOME}}"
 
 cd "${DOTFILES}"
-for package in $(find . -mindepth 1 -maxdepth 1 -type d ! -name '.git' | cut -c 3- | sort); do
-    set -x
-    stow --target="${STOW_TARGET}" "${package}"
-    { set +x &>/dev/null; } &>/dev/null
+for package in $(find . -mindepth 1 -maxdepth 1 -type d ! -name '.git' -printf '%f\n' | sort)
+do
+    case "${package}" in
+        .git)
+            continue
+            ;;
+        python)
+            # copy bin/python symlinks rather than symlinking them
+            set -x
+            stow --target="${STOW_TARGET}" --ignore 'bin/python[0-9]([0-9\.]*)' "${package}"
+            cp --force --no-dereference --preserve=links --update python/bin/python* ${STOW_TARGET}/bin/
+            { set +x >/dev/null 2>&1; } >/dev/null 2>&1
+            ;;
+        *)
+            set -x
+            stow --target="${STOW_TARGET}" "${package}"
+            { set +x >/dev/null 2>&1; } >/dev/null 2>&1
+            ;;
+    esac
 done
