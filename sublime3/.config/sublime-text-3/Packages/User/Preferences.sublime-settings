@@ -12,7 +12,6 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"Anaconda",
 		"JavaScript",
 		"Meteor Autocomplete (TernJS)",
 		"Meteor Snippets",
@@ -25,6 +24,7 @@
 		"SublimeLinter-flake8",
 		"SublimeLinter-json",
 		"SublimeLinter-pyflakes",
+		"SublimeLinter-pylint",
 		"SublimeLinter-pyyaml",
 		"SublimeLinter-shellcheck",
 		"Vintage"
