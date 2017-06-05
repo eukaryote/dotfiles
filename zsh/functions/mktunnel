@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+# Create an SSH tunnel that forwards traffic for
+# a local port to a port on a remote server.
+
+main() {
+    local -r remote_host="${1:-}"
+    local -r remote_port="${2:-}"
+    local -r local_host="${3:-}"
+    local -r local_port="${4:-}"
+
+    if [[ -z "${remote_host}" || -z "${remote_port}" || -z "${local_host}" || -z "${local_port}" ]]
+    then
+        >&2 echo "usage: mktunnel REMOTE_HOST REMOTE PORT LOCAL_HOST LOCAL_PORT"
+        return 1
+    fi
+    ssh -f -N \
+        -L "${local_port}:${local_host}:${remote_port}" \
+        "${remote_host}"
+}
+
+main "$@"
