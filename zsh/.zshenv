@@ -86,18 +86,23 @@ unset JAVA_TOOL_OPTIONS
 
 # golang conf
 [[ ! -d ~/go ]] && mkdir ~/go
-export GOPATH=~/go
+export GOPATH=$HOME/go
+export GOROOT=/opt/go/default
 path=(
     /opt/git/default/bin
     /opt/curl/default/bin
     /opt/nghttp2/default/bin
+    /opt/zookeeper/default/bin
+    /opt/kafkacat/default/bin
     /opt/terraform/default
     /opt/packer/default
-    /usr/local/go/bin
+    /opt/go/default/bin
     ${GOPATH}/bin
     /opt/node/default/bin
     $HOME/.cabal/bin
     $HOME/.cargo/bin
+    /opt/nim/default/bin
+    $HOME/.nimble/bin
     $path
 )
 
