@@ -88,9 +88,14 @@ function source-if-exists {
 # In order for this to work, the pyenv-virtualenvwrapper plugin needs to
 # exist in ~/.pyenv/plugins.
 if [[ -s "${PYENV_ROOT:-$HOME/.pyenv}/bin/pyenv" ]]; then
-    path=("${PYENV_ROOT:-$HOME/.pyenv}/bin" $path)
-    eval "$(pyenv init -)"
+    mybin="$HOME/bin"
+    if [[ "${path[0]}" = "${mybin}" ]]
+    then
+        path=(${path[@]:2})
+    fi
+    eval "$(${PYENV_ROOT:-$HOME/.pyenv}/bin/pyenv init -)"
     pyenv virtualenvwrapper_lazy
+    path=(${mybin} ${path})
 fi
 
 # Initialize my chpwd script that will activate a virtualenv when entering

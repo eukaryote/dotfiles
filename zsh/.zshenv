@@ -88,7 +88,13 @@ unset JAVA_TOOL_OPTIONS
 [[ ! -d ~/go ]] && mkdir ~/go
 export GOPATH=$HOME/go
 export GOROOT=/opt/go/default
-path=(
+
+# directories to be prepended to head of path
+# in array-order (prepended in order defined);
+# $HOME/bin should be last, as it the pyenv
+# shims will be inserted after the first element
+# so that executables in $HOME/bin are found first.
+extra_path_dirs=(
     /opt/git/default/bin
     /opt/curl/default/bin
     /opt/nghttp2/default/bin
@@ -96,15 +102,27 @@ path=(
     /opt/kafkacat/default/bin
     /opt/terraform/default
     /opt/packer/default
+    /opt/consul/default
     /opt/go/default/bin
-    ${GOPATH}/bin
     /opt/node/default/bin
+    /opt/nim/default/bin
+    $HOME/.gem/ruby/default/bin
+    ${GOPATH}/bin
     $HOME/.cabal/bin
     $HOME/.cargo/bin
-    /opt/nim/default/bin
     $HOME/.nimble/bin
-    $path
+    $HOME/.local/bin
+    $HOME/bin
 )
+
+# additional path dirs
+for dir in  "${extra_path_dirs[@]}"
+do
+    if [[ -d "${dir}" ]]
+    then
+        path=("${dir}" ${path[@]})
+    fi
+done
 
 # Log TLS keys to file for wireshark debugging
 export SSLKEYLOGFILE="${HOME}/.ssl/sslkeylogfile.txt"
@@ -136,12 +154,6 @@ addfpath "${ZPROMPTDIR}"
 
 test -f "${HOME}/.zshenv-custom" && source "${HOME}/.zshenv-custom"
 
-# additional path dirs
-for dir in  /opt/terraform/default /opt/consul/default /opt/packer/default ${HOME}/bin ${HOME}/scripts ${HOME}/.local/bin ${HOME}/.gem/ruby/default/bin; do
-    if [[ -d "${dir}" ]]; then
-        path=("${dir}" $path)
-    fi
-done
 
 # additional man dirs
 [[ -d "${HOME}/.local/share/man" ]] && export MANPATH=":${HOME}/.local/share/man"
