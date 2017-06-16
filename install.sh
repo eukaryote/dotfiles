@@ -29,8 +29,9 @@ do
         python)
             # copy bin/python symlinks rather than symlinking them
             set -x
-            stow --target="${STOW_TARGET}" --ignore 'bin/python[0-9]([0-9\.]*)' "${package}"
+            stow --target="${STOW_TARGET}" --ignore 'bin/i?python[0-9]([0-9\.]*)' "${package}"
             cp --force --no-dereference --preserve=links --update python/bin/python* ${STOW_TARGET}/bin/
+            cp --force --no-dereference --preserve=links --update python/bin/ipython* ${STOW_TARGET}/bin/
             { set +x >/dev/null 2>&1; } >/dev/null 2>&1
             ;;
         *)
