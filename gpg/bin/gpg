@@ -1,18 +1,20 @@
 #!/bin/sh
 
 # A wrapper script intended to be installed as 'gpg'
-# in a directory on PATH (before system dirs that
-# might contain ancient GPG versions) that fails
-# if gpg2 is not found and otherwise execs gpg2
-# with all parameters passed through to gpg2.
+# that invokes the 'gpg' executable at the expected
+# /opt/gpg/default/bin/gpg location.
+#
+# If a GPG_MIN_VERSION env var is set, this script
+# will first verify that the gpg to be executed
+# is at least the required minimum version,
+# failing if not. This is protection against
+# an older version of GPG with security problems
+# being invoked unknowingly.
 
-# If a GPG_MIN_VERSION environment variable
-# is set, this script will verify the version
-# found by running 'gpg2' is that version
-# or newer, failing if not.
+GPG='/opt/gpg/default/bin/gpg'
 
 gpg_version() {
-    local version="$(gpg2 --version | head -n 1 | grep -E -o '([[:digit:]]|\.)+$' | tr -d '\n')"
+    local version="$(${GPG} --version | head -n 1 | grep -E -o '([[:digit:]]|\.)+$' | tr -d '\n')"
     if [ -z "${version}" ]
     then
         >&2 echo "ERROR: couldn't determine GPG version"
@@ -22,9 +24,9 @@ gpg_version() {
 }
 
 check_installed() {
-    if ! which gpg2 >/dev/null 2>&1
+    if ! test -f "${GPG}"
     then
-        >&2 echo "ERROR: gpg2 not found on PATH"
+        >&2 echo "ERROR: gpg not found at expected location: ${GPG}"
         exit 1
     fi
 }
@@ -33,7 +35,7 @@ check_version() {
     if [ -n "${GPG_MIN_VERSION:-}" ]
     then
         local version
-        version="$(gpg_version)" || return $?
+        version=$(gpg_version) || return $?
         if [ "$(awk "BEGIN{ print \"${GPG_MIN_VERSION}\"<\"${version}\" }" < /dev/null)" -eq 0 ]
         then
             >&2 echo "ERROR: GPG_MIN_VERSION=${GPG_MIN_VERSION} not satisfied: found version ${version}"
@@ -42,4 +44,4 @@ check_version() {
     fi
 }
 
-check_installed && check_version && exec gpg2 "$@"
+check_installed && check_version && exec "${GPG}" "$@"
