@@ -23,6 +23,7 @@ alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias type='type -a'
 
 alias c='curly'
+alias conns='sudo /bin/netstat -tupn'
 
 alias ls='ls --group-directories-first'
 if [[ -s "$HOME/.dir_colors" ]]; then
