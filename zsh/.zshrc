@@ -136,8 +136,11 @@ if [[ -d "${ZDOTDIR}/functions" ]]; then
     done
 fi
 
-source ${ZDOTDIR}/.aliases.zsh
-source ${ZDOTDIR}/.aliases-git
+source-if-exists "${ZDOTDIR}/.aliases.zsh"
+source-if-exists "${ZDOTDIR}/.aliases-git"
+
+# Custom aliases that are host specific and not in git:
+source-if-exists "${ZDOTDIR}/.aliases-custom"
 
 # Initialize zsh-syntax-highlighting if present. This must be last in .zshrc.
 source-if-exists "${REPODIR}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
