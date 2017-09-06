@@ -13,12 +13,6 @@ alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
-# disable globbing
-alias history='noglob history'
-alias find='noglob find'
-alias locale='noglob locale'
-alias scp='noglob scp'
-
 alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias type='type -a'
 
@@ -60,7 +54,7 @@ alias grep='grep --color=AUTO'
 alias gpg=gpg2
 
 # history convenience function (zsh requires first=0 below to use full history)
-alias history='noglob history 0'
+alias history='history 0'
 
 # show environment in sorted order with color-highlight of KEY
 # (don't use 'env' as alias, because it interferes with zsh)
