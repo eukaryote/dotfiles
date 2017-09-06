@@ -98,6 +98,19 @@ if [[ -s "${PYENV_ROOT:-$HOME/.pyenv}/bin/pyenv" ]]; then
     path=(${mybin} ${path})
 fi
 
+# Find dupe files in a directory, defaulting to the current
+# working directory if no directory is provided.
+finddupes() {
+    find "${1:-.}" -not -empty -type f -printf "%s\n" | \
+        sort -rn | \
+        uniq -d | \
+        xargs -I{} -n1 find -type f -size {}c -print0 | \
+        xargs -0 sha256sum | \
+        sort | \
+        uniq -w64 --all-repeated=separate
+}
+
+
 # Initialize my chpwd script that will activate a virtualenv when entering
 # a directory that contains a .venv file with the name of a virtualenv inside
 # (or entering a descendent of such a directory) and deactivate the virtualenv
