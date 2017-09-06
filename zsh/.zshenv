@@ -114,8 +114,6 @@ extra_path_dirs=(
     $HOME/.local/bin
     $HOME/bin
 )
-
-# additional path dirs
 for dir in  "${extra_path_dirs[@]}"
 do
     if [[ -d "${dir}" ]]
@@ -123,6 +121,23 @@ do
         path=("${dir}" ${path[@]})
     fi
 done
+
+# directories to be prepended to head of LD_LIBRARY_PATH
+# if they exist.
+extra_library_dirs=(
+    #/usr/local/lib
+)
+if [[ -n "${extra_library_dirs}" ]]
+then
+    for dir in "${extra_library_dirs[@]}"
+    do
+       if [[ -d "${dir}" ]]
+        then
+            LD_LIBRARY_PATH="${dir}:${LD_LIBRARY_PATH}"
+        fi
+    done
+    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH%%:}"
+fi
 
 # Log TLS keys to file for wireshark debugging
 export SSLKEYLOGFILE="${HOME}/.ssl/sslkeylogfile.txt"
@@ -153,7 +168,6 @@ addfpath "${ZDOTFUNCTIONSDIR}"
 addfpath "${ZPROMPTDIR}"
 
 test -f "${HOME}/.zshenv-custom" && source "${HOME}/.zshenv-custom"
-
 
 # additional man dirs
 [[ -d "${HOME}/.local/share/man" ]] && export MANPATH=":${HOME}/.local/share/man"
