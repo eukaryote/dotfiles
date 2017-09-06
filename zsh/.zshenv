@@ -95,6 +95,7 @@ export GOROOT=/opt/go/default
 # shims will be inserted after the first element
 # so that executables in $HOME/bin are found first.
 extra_path_dirs=(
+    /opt/neovim/default/bin
     /opt/git/default/bin
     /opt/curl/default/bin
     /opt/nghttp2/default/bin
