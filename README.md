@@ -1,4 +1,4 @@
 dotfiles
 ========
 
-eukaryote's configuration files
+Personal configuration files and scripts.
