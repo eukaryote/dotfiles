@@ -109,6 +109,10 @@ alias khreload="rm -rf $HOME/.knowhow/data && knowhow load < $HOME/knowhow.dump"
 alias khd="knowhow dump"
 alias khl="knowhow load < $HOME/knowhow.dump"
 
+# adminstrative aliases
+alias sd='sudo /bin/systemctl'
+alias jc='sudo /bin/journalctl'
+
 # Use pgrep to find the pid of the first arg, and if found, print the
 # environment of the process to stdout using the procfs environ file,
 # which only reflects the environment when the process was started.
