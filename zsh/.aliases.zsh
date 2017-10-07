@@ -156,3 +156,18 @@ spin() {
     done
     cleanup
 }
+
+# Helpers to determine type of param (e.g, iscommand ls).
+# These are not mutually exclusive, since it's possible for
+# a name like 'exec' to be a builtin, as well as a command,
+# function, and alias.
+iscommand()  { type -w "$1" | command grep ': command$'  >/dev/null 2>&1; }
+isfunction() { type -w "$1" | command grep ': function$' >/dev/null 2>&1; }
+isbuiltin()  { type -w "$1" | command grep ': builtin$'  >/dev/null 2>&1; }
+isalias()    { type -w "$1" | command grep ': alias$'    >/dev/null 2>&1; }
+
+# Evince func to open file[s] disowned and with err/out to devnull.
+if iscommand evince && ! isfunction evince
+then
+    evince() { command evince "$@" >/dev/null 2>&1 &| ; }
+fi
