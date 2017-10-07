@@ -6,5 +6,20 @@
     "shellcheck.customArgs": [
         "-x"
     ],
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "workbench.colorTheme": "Monokai",
+    "extensions.autoUpdate": false,
+    "python.venvPath": "/v",
+    "python.pythonPath": "/opt/python/3.6.3/bin/python3.6",
+    "python.unitTest.promptToConfigure": false,
+    "python.unitTest.pyTestEnabled": true,
+    "python.unitTest.pyTestPath": "/opt/python/3.6.3/pytest",
+    "python.unitTest.pyTestArgs": [
+        "--tb=short",
+        "--color=yes"
+    ],
+    "workbench.iconTheme": "vscode-icons",
+    "window.menuBarVisibility": "default",
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "none"
 }
