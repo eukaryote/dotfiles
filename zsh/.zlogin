@@ -9,4 +9,10 @@
   fi
 } &!
 
+# Source custom (ignored by git) login script if present.
+if [[ -s "${HOME}/.zlogin-custom" ]]
+then
+    source "${HOME}/.zlogin-custom"
+fi
+
 ## sublimeconf: filetype=shell
