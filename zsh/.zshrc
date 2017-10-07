@@ -152,6 +152,10 @@ fi
 source-if-exists "${ZDOTDIR}/.aliases.zsh"
 source-if-exists "${ZDOTDIR}/.aliases-git"
 
+# Distro-specific aliases
+[[ -s "/etc/redhat-release" ]] && source-if-exists "${ZDOTDIR}/.aliases-redhat"
+[[ -s "/etc/debian_version" ]] && source-if-exists "${ZDOTDIR}/.aliases-debian"
+
 # Custom aliases that are host specific and not in git:
 source-if-exists "${ZDOTDIR}/.aliases-custom"
 

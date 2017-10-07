@@ -1,0 +1,3 @@
+# aliases for redhat-based distro
+belongs() { yum -C --noplugins provides "$@" | grep "$(uname -m)" | sort | uniq; }
+installed() { yum -C --noplugins list installed "$@"; }

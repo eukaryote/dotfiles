@@ -1,0 +1,6 @@
+# aliases for debian-based distro
+belongs() { command dpkg -S "$@"; }
+installed() { command dpkg -l "$@" 2>/dev/null | command tail -n '+6' | command grep '^ii' | command awk '{printf "%s %s\n",$2,$3}'; }
+alias sapt='sudo /usr/bin/apt'
+alias saptc='sudo /usr/bin/apt-cache'
+alias saptg='sudo /usr/bin/apt-get'
