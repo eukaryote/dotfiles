@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Add a timestamp to the filename passed as arg 1, which may
+# be a full path or just a file. The timestamp is inserted
+# before the extension, if there is one, or at the end otherwise.
+[ -n "$1" ] || {
+    >&2 echo "usage: addtimestamp FILE"
+    exit 1
+}
+exec insertfilepart "$1" "$(timestamp)"

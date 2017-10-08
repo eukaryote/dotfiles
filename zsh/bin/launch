@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Launch a program disowned in background and not responding
+# to hup, with stdout and stderr redirected to a file in
+# ${TMPDIR} with a name like PROGRAM.20171008T095014.log.
+exe="${1:?launch requires at least one arg}"
+logfile="${TMPDIR:-/tmp}/$(addtimestamp "${exe##*/}").log"
+shift 1
+exec nohup "${exe}" "$@" > "${logfile}" 2>/dev/null &

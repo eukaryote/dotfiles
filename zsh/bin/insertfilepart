@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Given a file as arg 1 (just name or full path) and an
+# 'extra' string as arg2, insert the extra string into
+# the filename (adding an extra '.') before the extension
+# if there is one, or at the end if there is not.
+#
+# Examples:
+#   $ insertfilepart foo.bar.txt extra
+#   foo.bar.extra.txt
+#   $ insertfilepart foo extra
+#   foo.extra
+exec sed -r -e "s/(\.[^/\.]+)?$/.$2\1/" <<< "$1"

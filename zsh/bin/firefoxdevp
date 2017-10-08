@@ -1,0 +1,3 @@
+#!/bin/sh
+
+launch /opt/firefoxdev/default/bin/firefox --no-remote -ProfileManager "$@"

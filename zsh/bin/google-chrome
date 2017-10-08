@@ -1,0 +1,3 @@
+#!/bin/sh
+
+launch /usr/bin/google-chrome --enable-dom-distiller "$@"

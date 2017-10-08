@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Strip non-alphanumeric characters from $1, yielding a string
+# that is suitable for using as a filename, failing if there are
+# no remaining characters because there were no alphanumeric chars.
+[ -n "$1" ] || {
+    >&2 echo "usage: filesafe ARG"
+    exit 1
+}
+result=$(sed -e 's/\W//g' <<< "$1")
+case "${result}" in
+    "") exit 1;;
+    *) echo -n "${result}";;
+esac

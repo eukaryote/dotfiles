@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Echo current time as a timestamp suitable for embedding in filenames.
+exec date '+%Y%m%dT%H%M%S'
