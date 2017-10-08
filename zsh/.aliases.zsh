@@ -112,6 +112,8 @@ alias khl="knowhow load < $HOME/knowhow.dump"
 # adminstrative aliases
 alias sd='sudo /bin/systemctl'
 alias jc='sudo /bin/journalctl'
+alias jcu='sudo /bin/journalctl -u'
+alias skill='sudo kill'
 
 # Use pgrep to find the pid of the first arg, and if found, print the
 # environment of the process to stdout using the procfs environ file,
@@ -171,3 +173,69 @@ if iscommand evince && ! isfunction evince
 then
     evince() { command evince "$@" >/dev/null 2>&1 &| ; }
 fi
+
+# Strip all non-alphanumeric characters from $1, yielding a string
+# that is suitable for using as a filename, failing if there are
+# no remaining characters because there were no alphanumeric chars.
+clean_filename() {
+    local -r result=$(echo -n "$1" | sed -e 's/\W//g')
+    if [[ -z "${result}" ]]
+    then
+        return 1
+    fi
+    echo -n "${result}"
+}
+
+# Echo current time as a timestamp suitable for embedding in filenames.
+timestamp() {
+    command date '+%Y%m%dT%H%M%S'
+}
+
+# Given a file as arg 1 (just name or full path) and an
+# 'extra' string as arg2, insert the extra string into
+# the filename (adding an extra '.') before the extension
+# if there is one, or at the end if there is not.
+#
+# Examples:
+#   $ insertfilepart foo.bar.txt extra
+#   foo.bar.extra.txt
+#   $ insertfilepart foo extra
+#   foo.extra
+insertfilepart() {
+    echo -n "$1" | sed -r -e "s/(\.[^/\.]+)?$/.$2\1/"
+}
+
+# Add a timestamp to the filename passed as arg 1, which may
+# be a full path or just a file. The timestamp is inserted
+# before the extension, if there is one, or at the end otherwise.
+addtimestamp() {
+    insertfilepart "$1" "$(timestamp)"
+}
+
+# Launch a program disowned and with stdout and stderr redirected
+# to a file in ${TMPDIR} with a name like PROGRAM.20171008T095014.log.
+launch() {
+    local -r exe="$1"
+    local -r logfile="${TMPDIR:/tmp}/$(addtimestamp ${exe##*/}).log"
+    shift 1
+    command "${exe}" "$@" >"${logfile}" 2>&1 &|
+}
+
+# Launch firefox disowned and with output sent to tmp.
+firefox() {
+    launch firefox "$@"
+}
+# Same but not using existing windows and showing profile manager.
+firefoxp() {
+    firefox --no-remote -ProfileManager "$@"
+}
+# Launch firefox developer edition disowned and with output sent to tmp.
+firefoxdev() {
+    launch /opt/firefoxdev/default/firefox "$@"
+
+}
+# Same but not using existing windows and showing profile manager.
+firefoxdevp() {
+    firefoxdev --no-remote -ProfileManager "$@"
+}
+
