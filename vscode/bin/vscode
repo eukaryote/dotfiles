@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Setup vscode environment and launch vscode.
+
+# Ensure executables in vscode virtualenv are found first,
+# and use custom path that contains the standard system
+# dirs plus the custom ones we want to be available in vscode.
+vscodepaths=(
+	/opt/python/vscode/bin
+    /opt/zsh/default/bin
+	/opt/git/default/bin
+	/opt/neovim/default/bin
+	/opt/curl/default/bin
+    /opt/node/default/bin
+    /opt/terraform/default
+	/opt/packer/default
+	$HOME/.cabal/bin
+    $HOME/bin
+    /usr/local/bin
+    /usr/bin
+    /bin
+)
+export PATH=$(IFS=:; echo "${vscodepaths[*]}")
+
+# pythonpath shoudl be configured within vscode, so unset.
+unset PYTHONPATH
+
+exec /opt/vscode/default/bin/code-insiders "$@"
