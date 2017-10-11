@@ -1,0 +1,5 @@
+Set up vscode virtualenv:
+
+cd /opt/python
+./3.6.3/bin/virtualenv vscode
+./vscode/bin/pip install pytest pytest-xdist pylint flake8 ipython ipdb restructuredtext-lint
