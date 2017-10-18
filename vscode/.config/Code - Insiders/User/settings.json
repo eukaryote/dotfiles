@@ -22,5 +22,6 @@
     "window.menuBarVisibility": "default",
     "editor.minimap.enabled": false,
     "editor.renderWhitespace": "none",
-    "shellcheck.run": "onSave"
+    "shellcheck.run": "onSave",
+    "vsicons.dontShowNewVersionMessage": true
 }
