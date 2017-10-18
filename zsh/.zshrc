@@ -170,5 +170,8 @@ if which tmuxp >/dev/null 2>&1 ; then
     eval "$(_TMUXP_COMPLETE=source tmuxp)"
 fi
 
+autoload -U +X bashcompinit && bashcompinit
+complete -C /opt/terraform/default/terraform terraform
 
 ## sublimeconf: filetype=shell
+

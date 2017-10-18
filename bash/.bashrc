@@ -119,3 +119,6 @@ test -f ~/.bash_custom && . ~/.bash_custom
 
 # added by travis gem
 [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
+
+complete -C /opt/terraform/defalt/terraform terraform
+
