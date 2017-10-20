@@ -7,7 +7,7 @@
         "-x"
     ],
     "files.trimTrailingWhitespace": true,
-    "workbench.colorTheme": "Atom One Dark",
+    "workbench.colorTheme": "Monokai Pro",
     "extensions.autoUpdate": false,
     "python.venvPath": "/v",
     "python.pythonPath": "/opt/python/vscode/bin/python3.6",
@@ -18,10 +18,11 @@
         "--tb=short",
         "--color=yes"
     ],
-    "workbench.iconTheme": "vscode-icons",
     "window.menuBarVisibility": "default",
     "editor.minimap.enabled": false,
     "editor.renderWhitespace": "none",
     "shellcheck.run": "onSave",
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+    "workbench.iconTheme": "Monokai Pro Icons",
+    "material-icon-theme.showWelcomeMessage": false
 }
