@@ -17,6 +17,9 @@ export REPODIR="${REPODIR:-$HOME/repos}"
 # to be sourced that don't have a better home
 export SCRIPTDIR="$HOME/scripts"
 
+# Directory containing dockit image sub-directories
+export DOCKIT="$HOME/dockit"
+
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"

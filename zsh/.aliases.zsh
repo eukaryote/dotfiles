@@ -13,6 +13,7 @@ alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
+alias agc='ag --color'
 alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias type='type -a'
 
@@ -50,8 +51,6 @@ ddu () {
 }
 
 alias grep='grep --color=AUTO'
-
-alias gpg=gpg2
 
 # history convenience function (zsh requires first=0 below to use full history)
 alias history='history 0'

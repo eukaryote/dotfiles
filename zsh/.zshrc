@@ -175,3 +175,5 @@ complete -C /opt/terraform/default/terraform terraform
 
 ## sublimeconf: filetype=shell
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

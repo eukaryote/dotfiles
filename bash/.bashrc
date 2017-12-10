@@ -122,3 +122,5 @@ test -f ~/.bash_custom && . ~/.bash_custom
 
 complete -C /opt/terraform/defalt/terraform terraform
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
