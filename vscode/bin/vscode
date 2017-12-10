@@ -14,6 +14,7 @@ vscodepaths=(
     /opt/node/default/bin
     /opt/terraform/default
 	/opt/packer/default
+    $HOME/.cargo/bin
 	$HOME/.cabal/bin
     $HOME/bin
     /usr/local/bin
@@ -24,5 +25,11 @@ export PATH=$(IFS=:; echo "${vscodepaths[*]}")
 
 # pythonpath shoudl be configured within vscode, so unset.
 unset PYTHONPATH
+
+export RUSTC=$HOME/.cargo/bin/rust
+
+# Go env vars so that non-console launching gets them
+export GOROOT=/opt/go/default
+export GOPATH=$HOME/go
 
 exec /opt/vscode/default/bin/code-insiders "$@"

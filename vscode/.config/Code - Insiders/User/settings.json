@@ -7,12 +7,12 @@
         "-x"
     ],
     "files.trimTrailingWhitespace": true,
-    "workbench.colorTheme": "Monokai Pro",
+    "workbench.colorTheme": "Visual Studio Dark",
     "extensions.autoUpdate": false,
     "python.venvPath": "/v",
     "python.pythonPath": "/opt/python/vscode/bin/python3.6",
     "python.unitTest.promptToConfigure": false,
-    "python.unitTest.pyTestEnabled": true,
+    "python.unitTest.pyTestEnabled": false,
     "python.unitTest.pyTestPath": "/opt/python/vscode/pytest",
     "python.unitTest.pyTestArgs": [
         "--tb=short",
@@ -23,6 +23,12 @@
     "editor.renderWhitespace": "none",
     "shellcheck.run": "onSave",
     "vsicons.dontShowNewVersionMessage": true,
-    "workbench.iconTheme": "Monokai Pro Icons",
-    "material-icon-theme.showWelcomeMessage": false
+    "material-icon-theme.showWelcomeMessage": false,
+    "extensions.ignoreRecommendations": false,
+    "workbench.iconTheme": "vscode-icons",
+    "vim.neovimPath": "/opt/neovim/default/bin/nvim",
+    "vim.enableNeovim": false,
+    "files.insertFinalNewline": true,
+    "explorer.confirmDelete": false,
+    "terminal.integrated.fontSize": 13
 }
