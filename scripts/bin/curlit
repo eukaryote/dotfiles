@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+# Use cUrl to download the URL provided as the first param,
+# printing detailed timing and other info to stdout.
+# The response payload is discarded (written to /dev/null).
+#
+# The time fields provided are the following, in seconds
+# since the start of the request:
+#
+#  - time_namelookup: time until DNS lookup completion
+#  - time_connect: time until TCP connection established
+#  - time_appconnect: time until TLS connection established
+#  - time_pretransfer: time for all pre-transfer commands and negotiations
+#  - time_redirect: time for everything involved in redirect steps
+#        before the final transaction started
+#  - time_starttransfer: time until first byte about to be transferred
+#        (time_pretransfer + server processing time)
+#  - time_total: total time
+#
+# The timeout period for the request, after which it will
+# be cancelled if not complete, is 10 seconds by default,
+# but this can be overridden by setting the TIMEOUT
+# to the number of seconds to use for the timeout.
+
+curl_format='{
+ "url": "%{url_effective}",
+ "local": "%{local_ip}:%{local_port}",
+ "remote": "%{remote_ip}:%{remote_port}",
+ "http_version": "%{http_version}",
+ "http_code": "%{http_code}",
+ "size_download": %{size_download},
+ "time_namelookup": %{time_namelookup},
+ "time_connect": %{time_connect},
+ "time_appconnect": %{time_appconnect},
+ "time_pretransfer": %{time_pretransfer},
+ "time_redirect": %{time_redirect},
+ "time_starttransfer": %{time_starttransfer},
+ "time_total": %{time_total}
+}\n'
+
+usage() {
+    >&2 cat <<EOF
+Usage: curlit URL
+
+Use cUrl to download the provided URL, printing detailed info
+about the request & response to stdout.
+
+The following information is printed as a single JSON object
+(all times as seconds since the start of the request):
+
+  - url: the URL fetched (last one if redirects are followed)
+  - local: local IP:PORT of the request
+  - remote: remote IP:PORT of the request
+  - http_version: HTTP version
+  - http_code: HTTP status code of response (last one if redirects followed)
+  - size_download: total size of response in bytes
+  - time_namelookup: time from start until DNS resolution complete
+  - time_connect: time from start until TCP connection established
+  - time_appconnect: time from start until TLS session established
+  - time_pretransfer: time for all pre-transfer commands and negotiations
+  - time_redirect: time for all redirects before final transaction started
+  - time_starttransfer: time until first byte about to be transferred
+  - time_total: time until completion
+EOF
+}
+
+run() {
+    exec curl --connect-timeout ${TIMEOUT:-10} -w "${curl_format}" -o /dev/null -s -g "$1"
+}
+
+main() {
+    local -r url="${1:-}"
+    case "${url}" in
+        "")
+            usage
+            return 1;;
+        -h|--help)
+            usage
+            return 0;;
+        *)
+            run "${url}"
+            return 0;
+    esac
+}
+
+main "$@"
