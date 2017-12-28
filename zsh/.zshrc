@@ -98,10 +98,13 @@ if [[ -s "${PYENV_ROOT:-$HOME/.pyenv}/bin/pyenv" ]]; then
     path=(${mybin} ${path})
 fi
 
-# Find dupe files in a directory, defaulting to the current
-# working directory if no directory is provided.
+# Find non-empty duplicate files in a directory.
+#
+# If no directory arg is provided as the first param (subsequent
+# params ignored), then it defaults to the current working directory.
+# The '.directory' files that are added by Dolphin are ignored.
 finddupes() {
-    find "${1:-.}" -not -empty -type f -printf "%s\n" | \
+    find "${1:-.}" -not -name '.directory' -and -not -empty -type f -printf "%s\n" | \
         sort -rn | \
         uniq -d | \
         xargs -I{} -n1 find -type f -size {}c -print0 | \
