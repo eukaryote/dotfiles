@@ -172,3 +172,111 @@ if iscommand evince && ! isfunction evince
 then
     evince() { command evince "$@" >/dev/null 2>&1 &| ; }
 fi
+
+# Convert filename provided via stdin to standard format for papers.
+#
+# Given one or more words over one or more lines, all of which together
+# represent a title with spaces and special characters that are unwanted
+# in filenames, print to stdout the result of using 'denominate' to
+# convert the name to our desired format (non-alphanumeric chars
+# converted to hyphens and all words separated by hyphens and
+# letters in lowercase).
+nameit () {
+    local name=""
+
+    which denominate >/dev/null 2>&1 || {
+        2>&1 echo "denominate utility not found on PATH"
+        return 1
+    }
+
+    # read all lines as one name, converting newline to space
+    local line
+    while read -r line
+    do
+        [[ -n "${name}" ]] && name="${name} "
+        name="${name}${line//$'\n'/ }"
+    done
+
+    # convert slash  and dot in name to space
+    name="${name//\// }"
+    name="${name//./ }"
+
+    # exit if name seems to be empty or just contain ws at this point
+    if [[ -z "${name// /}" ]]
+    then
+        2>&1 echo "usage: nameit"
+        2>&1 echo "  Provide filename via stdin (ctrl-d to terminate input)"
+        return 1
+    fi
+
+    # generate temporary file with name in a temp dir so that
+    # we can use 'denominate' to do the renaming on that directory,
+    # and then report renamed file and cleanup
+    local -r workdir="$(mktemp -d)" || return 1
+    pushd "${workdir}" >/dev/null 2>&1 || return 1
+    command touch "${name}" || return 1
+    denominate . || return 1
+    find . -type f | cut -c '3-'
+    find . -type f -delete || return 1
+    popd >/dev/null 2>&1 || return 1
+    rmdir "${workdir}"
+}
+
+
+# Rename each file provided as an arg using pdftitle.py.
+#
+# Runs pdftitle.py with --dry-run first to preview the
+# name change and prompts for yesno, renaming only if
+# yes provided.
+#
+# Relies on nevesnunes/pdftitle.py
+# (https://gist.github.com/nevesnunes/84b2eb7a2cf63cdecd170c139327f0d6),
+# which in turn needs unidecode, pyPDF, PDFMiner to be available
+# to the invoking python.
+renameall() {
+    local fp
+    local yesno
+
+    local -r py="${PDFTITLE_PYTHON:-python2}"
+    local -r pdftitle="${PDFTITLE:-${HOME}/bin/pdftitle.py}"
+
+    # verify pdftitle is available
+    [[ -e "${pdftitle}" ]] || {
+        2>&1 echo "pdftitle script '${pdftitle}' not found"
+        return 1
+    }
+
+    # verify python available and is a 2.7 version
+    if ! "${py}" --version 2>&1 | command grep 'Python 2\.7' >/dev/null 2>&1
+    then
+        2>&1 echo "set PDFTITLE_PYTHON to a Python 2.7 with pdftitle deps installed"
+        return 1
+    fi
+
+    # verify the 3 deps pdftitle needs are installed
+    # (pip install --user unidecode pyPDF PDFMiner)
+    if ! "${py}" -c "import unidecode, pyPdf, pdfminer" >/dev/null 2>&1
+    then
+        2>&1 echo "one or more pdftitle deps missing (unidecode, pyPdf, pdfminer)"
+        return 1
+    fi
+
+
+    for fp in "$@"
+    do
+        "${py}" "${pdftitle}" --rename --dry-run "${fp}" || return
+        while true
+        do
+            read 'yesno?Rename [yn]? '
+            case $yesno in
+                [Yy]* )
+                    "${py}" "${pdftitle}" --rename "${fp}" || return;
+                    break;;
+                [Nn]* )
+                    break;;
+                * )
+                    echo "Please answer yes or no.";;
+            esac
+        done
+    done
+}
