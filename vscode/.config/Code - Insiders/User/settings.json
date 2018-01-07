@@ -1,5 +1,4 @@
 {
-    "vim.disableAnnoyingNeovimMessage": true,
     "vim.handleKeys": {
             "<C-k>": false
     },
@@ -23,7 +22,6 @@
     "editor.renderWhitespace": "none",
     "shellcheck.run": "onSave",
     "vsicons.dontShowNewVersionMessage": true,
-    "material-icon-theme.showWelcomeMessage": false,
     "extensions.ignoreRecommendations": false,
     "workbench.iconTheme": "vscode-icons",
     "vim.neovimPath": "/opt/neovim/default/bin/nvim",
