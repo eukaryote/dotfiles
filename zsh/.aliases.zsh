@@ -216,10 +216,16 @@ nameit () {
     pushd "${workdir}" >/dev/null 2>&1 || return 1
     command touch "${name}" || return 1
     denominate . || return 1
-    find . -type f | cut -c '3-'
+
+    # record name and cleanup then echo and put on clipboard
+    local new_name
+    new_name=$(find . -type f | cut -c '3-') || return 1
+
     find . -type f -delete || return 1
     popd >/dev/null 2>&1 || return 1
     rmdir "${workdir}"
+    xclip -in -select clipboard <<<"${new_name}"
+    echo "${new_name}"
 }
 
 
