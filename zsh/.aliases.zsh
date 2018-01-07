@@ -286,3 +286,41 @@ renameall() {
         done
     done
 }
+
+# Convert JSON file given as first arg (or '-' for stdin, which is the
+# default if no arg provided) to a ENVVAR=VAL file that is printed
+# to stdout, with any empty values omitted.
+#
+# The values are not quoted, because runenv takes everything after
+# the '=' as the value including quotes if present.
+jsontoenv() {
+    which jq >/dev/null 2>&1 || {
+        2>&1 echo "ERROR: jq not found"
+        return 1
+    }
+    local -r json_env="${1:--}"
+    jq -r "to_entries|map(select(.value|length > 0))|map(\"\(.key)=\(.value|tostring)\")|.[]" "${json_env}"
+}
+
+# Run program ($2) with environment provided in JSON file ($1) using the
+# `runenv` utility from perp's runtools.
+runjsonenv() {
+    which runenv >/dev/null 2>&1 || {
+        2>&1 echo "ERROR: runenv not found (see runtools from http://b0llix.net/perp/)"
+        return 1
+    }
+    local -r json_env="${1:-''}"
+    [[ -n "${json_env}" ]] || {
+        2>&1 echo "usage: runjsonenv json_env program [ args ... ]"
+        return 1
+    }
+    shift
+    local -r program="${1:-''}"
+    [[ -n "${program}" ]] || {
+        2>&1 echo "usage: runjsonenv json_env program [ args ... ]"
+        return 1
+    }
+    shift
+    jsontoenv "${json_env}" | runenv - ${program} "$@"
+}
+
