@@ -86,7 +86,13 @@ alias lstra='ls -ltrA'
 
 alias manh='man --html'
 
-psg() { ps -ef | grep "$@" | grep -v grep | more; }
+# grep ps output, ignore kernel threads and the search command itself
+if which rg >/dev/null 2>&1
+then
+    psg() { ps -ef | rg -v '(\srg\s)|(\[.*\]$)' | rg "$@" | more; }
+else
+    psg() { ps -ef | grep -vE '(\sgrep\s)|(\[.*\]$)' | grep -iE "$@" | more; }
+fi
 
 alias lua='lua5.3'
 alias luac='luac5.3'
