@@ -13,9 +13,13 @@ alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
-alias agc='ag --color'
 alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias type='type -a'
+
+sanitize() {
+    # from https://unix.stackexchange.com/a/4529
+    perl -pe 's/\e\[?.*?[\@-~]//g' "$@"
+}
 
 alias c='curly'
 alias conns='sudo /bin/netstat -tupn'
@@ -50,16 +54,27 @@ ddu () {
     cd ${1:-.} && du -hs * | sort -h
 }
 
-alias grep='grep --color=AUTO'
-
 # history convenience function (zsh requires first=0 below to use full history)
-alias history='history 0'
+alias history='command history 0'
 
+## Search aliases & helpers
+alias grep='grep --color=AUTO'
+alias grepp='grep -P'
+alias grepe='grep -E'
+# grep ps output, ignore kernel threads and the search command itself
+if which rg >/dev/null 2>&1
+then
+    psg() { ps -ef | rg -v '(\srg\s)|(\[.*\]$)' | rg "$@" | more; }
+else
+    psg() { ps -ef | grep -vE '(\sgrep\s)|(\[.*\]$)' | grep -iE "$@" | more; }
+fi
+alias rg='nocorrect command rg --smart-case'
+alias rgc='nocorrect command rg --case-sensitive'
+alias rgi='nocorrect command rg --ignore-case'
 # show environment in sorted order with color-highlight of KEY
 # (don't use 'env' as alias, because it interferes with zsh)
-alias myenv="env | sort | grep -E '^[A-Z_0-9]+'"
-alias envg="env | sort | grep"
-alias envgi="env | sort | grep -i"
+alias myenv="nocorrect command env | sort | grep -E '^[A-Z_0-9]+'"
+alias envg="nocorrect command env | sort | rg"
 
 # make directory and cd into it
 function mkcd {
@@ -86,16 +101,9 @@ alias lstra='ls -ltrA'
 
 alias manh='man --html'
 
-# grep ps output, ignore kernel threads and the search command itself
-if which rg >/dev/null 2>&1
-then
-    psg() { ps -ef | rg -v '(\srg\s)|(\[.*\]$)' | rg "$@" | more; }
-else
-    psg() { ps -ef | grep -vE '(\sgrep\s)|(\[.*\]$)' | grep -iE "$@" | more; }
-fi
-
 alias lua='lua5.3'
 alias luac='luac5.3'
+
 
 # redo last command but pipe it to less
 alias redol="!! | less"
@@ -120,21 +128,40 @@ alias jc='sudo /bin/journalctl'
 alias jcu='sudo /bin/journalctl -u'
 alias skill='sudo kill'
 
-# Use pgrep to find the pid of the first arg, and if found, print the
-# environment of the process to stdout using the procfs environ file,
-# which only reflects the environment when the process was started.
+# Print sanitized environ of process with provided pid,
+# or the current process if no pid is provided.
+catprocenv() {
+    local -r pid="${1:-self}"
+    command cat /proc/"${pid}"/environ | tr '\000' '\n' | sanitize
+}
+
+# Use pgrep to find pids matching the first arg, and if found, print the
+# pid found followed by the env for that pid and a newline.
+# This uses te procfs environ file, which only reflects the environment
+# when the process was started.
 # If called with no args, then print the environment of the current process.
 lsenv() {
-    if [[ -n "$1" ]]; then
-        pid="$(pgrep $1)"
-        if [[ -z "$pid" ]]; then
-            echo "no process found: $1"
-            return 1
-        fi
-    else
-        pid="self"
+    local -r search_term="${1:-}"
+    local pid
+
+    # if no search term, show current proc's pid and env
+    if [[ -z "${search_term}" ]]
+    then
+        pid=$$
+        echo "${pid}"
+        catprocenv "${pid}"
+        return 0
     fi
-    cat /proc/$pid/environ | tr '\000' '\n'
+
+    # otherwise, print pid and env for each process found by pgrep
+    local i=0
+    pgrep "$1" | while read -r pid
+    do
+        [[ $i > 0 ]] && echo
+        echo "${pid}"
+        catprocenv "${pid}"
+        i=$((i + 1))
+    done
 }
 
 # Print a spinner at the current cursor location for as long as the process
