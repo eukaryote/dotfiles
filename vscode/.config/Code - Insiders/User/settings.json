@@ -28,5 +28,5 @@
     "vim.enableNeovim": false,
     "files.insertFinalNewline": true,
     "explorer.confirmDelete": false,
-    "window.zoomLevel": 0
+    "window.zoomLevel": -0.001
 }
