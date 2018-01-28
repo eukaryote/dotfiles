@@ -55,7 +55,7 @@ ddu () {
 }
 
 # history convenience function (zsh requires first=0 below to use full history)
-alias history='command history 0'
+alias history='history 0'
 
 ## Search aliases & helpers
 alias grep='grep --color=AUTO'
