@@ -2,18 +2,16 @@
 
 # Setup vscode environment and launch vscode.
 
-# Ensure executables in vscode virtualenv are found first,
+# Ensure executables in vscode python env are found first,
 # and use custom path that contains the standard system
 # dirs plus the custom ones we want to be available in vscode.
 vscodepaths=(
 	/opt/python/vscode/bin
-    /opt/zsh/default/bin
 	/opt/git/default/bin
 	/opt/neovim/default/bin
 	/opt/curl/default/bin
     /opt/node/default/bin
     /opt/terraform/default
-	/opt/packer/default
     $HOME/.cargo/bin
 	$HOME/.cabal/bin
     $HOME/bin
@@ -32,4 +30,4 @@ export RUSTC=$HOME/.cargo/bin/rust
 export GOROOT=/opt/go/default
 export GOPATH=$HOME/go
 
-exec /opt/vscode/default/bin/code-insiders "$@"
+exec /opt/vscode/default/bin/code-insiders --extensions-dir=/opt/vscode/extensions --user-data-dir=/opt/vscode/user-data "$@"

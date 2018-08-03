@@ -1,15 +1,15 @@
 {
     "vim.handleKeys": {
-            "<C-k>": false
+        "<C-k>": false
     },
     "shellcheck.customArgs": [
         "-x"
     ],
     "files.trimTrailingWhitespace": true,
-    "workbench.colorTheme": "Visual Studio Dark",
     "extensions.autoUpdate": false,
+    "python.venvFolders": [],
     "python.venvPath": "/v",
-    "python.pythonPath": "/opt/python/vscode/bin/python3.6",
+    "python.pythonPath": "/opt/python/vscode/bin/python3",
     "python.unitTest.promptToConfigure": false,
     "python.unitTest.pyTestEnabled": false,
     "python.unitTest.pyTestPath": "/opt/python/vscode/pytest",
@@ -17,9 +17,19 @@
         "--tb=short",
         "--color=yes"
     ],
+    "python.linting.flake8Args": [
+        "--max-line-length=88",
+        "--ignore=E121,E126,E203,W503"
+    ],
+    "python.workspaceSymbols.tagFilePath": "/opt/vscode/tags/${workspaceRootFolderName}",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pep8Enabled": false,
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    "files.autoSave": "off",
     "window.menuBarVisibility": "default",
     "editor.minimap.enabled": false,
-    "editor.renderWhitespace": "none",
     "shellcheck.run": "onSave",
     "vsicons.dontShowNewVersionMessage": true,
     "extensions.ignoreRecommendations": false,
@@ -28,5 +38,105 @@
     "vim.enableNeovim": false,
     "files.insertFinalNewline": true,
     "explorer.confirmDelete": false,
-    "window.zoomLevel": -0.001
+    "window.zoomLevel": -0.001,
+    "typescript.useCodeSnippetsOnMethodSuggest": true,
+    "editor.parameterHints": true,
+    "vim.textwidth": 88,
+    "editor.rulers": [
+        88
+    ],
+    "zenMode.hideTabs": false,
+    "editor.wrappingIndent": "indent",
+    "vim.autoindent": false,
+    "editor.cursorStyle": "underline-thin",
+    "editor.roundedSelection": true,
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "editor.formatOnType": false,
+    "python.formatting.autopep8Args": [
+        "--ignore-local-config"
+    ],
+    "html.format.wrapLineLength": 88,
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "/usr/local/bin/black",
+    "editor.formatOnSave": true,
+    "editor.wordWrapColumn": 88,
+    "editor.wordWrap": "bounded",
+    "editor.formatOnSaveTimeout": 4000,
+    "editor.tabSize": 4,
+    "editor.renderWhitespace": "all",
+    "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+    "terraform.telemetry.enabled": false,
+    "files.associations": {
+        "**/group_vars/*": "ansible",
+        "**/host_vars/*": "ansible",
+        "prod": "ini",
+        "qa": "ini",
+        "infra": "ini",
+        "**/aspera.conf": "xml",
+        "**/defaults/**/*": "ansible",
+        "**/tasks/**/*.yml": "ansible",
+        "**/handler/*.yml": "ansible",
+        "**/roles/**/*.yml": "ansible",
+        "**/playbooks/**/*.yml": "ansible",
+        "**/*ansible*/**/*.yml": "ansible",
+        "**/vars/**/*.yml": "ansible",
+        "**/inventory/*/*": "ansible",
+        "**/docker-compose.yml": "yaml",
+        "**/docker-compose.*.yml": "yaml",
+        "**/Dockerfile*": "dockerfile"
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/__pycache__": true,
+        "**/.pytest_cache": true,
+        "**/.cache": true,
+        "**/.terraform": true,
+        "**/.vscode": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/.terraform": true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/__pycache__": true,
+        "**/.vscode": true,
+        "**/.pytest_cache": true,
+        "**/.cache": true
+    },
+    "projectManager.vscode.ignoredFolders": [
+        "node_modules",
+        "out",
+        "typings",
+        ".pytest_cache",
+        "__pycache__"
+    ],
+    "workbench.sideBar.location": "left",
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.labelFormat": "medium",
+    "search.smartCase": true,
+    "extensions.closeExtensionDetailsOnViewChange": true,
+    "extensions.showRecommendationsOnlyOnDemand": true,
+    "terminal.external.linuxExec": "konsole",
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.cwd": "/s",
+    "workbench.activityBar.visible": true,
+    "breadcrumbs.enabled": true,
+    "workbench.colorTheme": "United Ubuntu",
+    "workbench.settings.enableNaturalLanguageSearch": false,
+    "update.enableWindowsBackgroundUpdates": false,
+    "python.analysis.openFilesOnly": false,
+    "python.jediEnabled": false
 }
