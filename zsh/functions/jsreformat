@@ -1,0 +1,18 @@
+#!/bin/sh
+
+_jsreformat() {
+    local f="${1:-}"
+    test -f "${f}" || {
+        echo 'usage: jsreformat FILE'
+        return 1
+    }
+    which jq >/dev/null 2>&1 || {
+        echo "jq not found on PATH"
+        return 1
+    }
+    jq '.' < "${f}" > "${f}.$$.tmp" && \
+      cat "${f}.$$.tmp" > "${f}" && \
+      rm -f "${f}.$$.tmp"
+}
+
+_jsreformat "$@"
