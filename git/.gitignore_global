@@ -4,4 +4,5 @@ __pycache__
 .cache
 .venv
 .python-version
+.vscode
 *~
