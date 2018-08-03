@@ -132,7 +132,8 @@ export RPROMPT='%(?..%B%F{red}%? ↵%b%{%})'
 autoload -Uz compinit promptinit
 compinit -d $HOME/.zcompdump
 promptinit
-prompt eukaryote
+#prompt eukaryote
+prompt pure
 autoload -U colors && colors
 
 # Use emacs mode
