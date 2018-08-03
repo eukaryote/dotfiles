@@ -23,9 +23,6 @@ cd "${DOTFILES}"
 for package in $(find . -mindepth 1 -maxdepth 1 -type d ! -name '.git' -printf '%f\n' | sort)
 do
     case "${package}" in
-        .git)
-            continue
-            ;;
         python)
             # copy bin/python symlinks rather than symlinking them
             set -x
