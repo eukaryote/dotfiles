@@ -176,7 +176,7 @@ fi
 autoload -U +X bashcompinit && bashcompinit
 complete -C /opt/terraform/default/terraform terraform
 
+source-if-exists "$HOME/.fzf.zsh"
+#source-if-exists "/usr/share/google-cloud-sdk/completion.zsh.inc"
+
 ## sublimeconf: filetype=shell
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
