@@ -37,7 +37,6 @@ set laststatus=2   " always show status line in last window
 
 "set number         " show line numbers
 set showcmd        " show last command entered at bottom right
-set cursorline     " highlight current line
 set wildmenu       " enable visual autocomplete for command menu
 set lazyredraw     " only redraw when necessary
 set showmatch      " highlight matching [{()}]
